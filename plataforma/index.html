@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Observatorio de Riesgo Cardiovascular · Julián Rosonovich</title>
+<meta name="description" content="Plataforma de relevamiento y análisis de factores de riesgo cardiovascular para municipios. Julián Rosonovich · Epidemiología.">
+<meta name="theme-color" content="#0E2D51">
+<link rel="icon" type="image/png" href="/plataforma/logo.png">
+<link rel="apple-touch-icon" href="/plataforma/icon-192.png">
+<link rel="manifest" href="/plataforma/manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/plataforma/styles.css">
+</head>
+<body>
+
+<!-- ================= INGRESO ================= -->
+<div id="vLogin" class="login" hidden>
+  <aside class="login-side">
+    <a href="/" class="logo logo-light" aria-label="Volver a la web">
+      <img class="logo-iso" src="/plataforma/logo.png" alt="">
+      <span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA</span></span>
+    </a>
+    <div class="login-pitch">
+      <span class="eyebrow">Plataforma para municipios</span>
+      <h1>Observatorio de Riesgo <em>Cardiovascular</em></h1>
+      <p>Relevamiento territorial de presión arterial, glucemia, tabaquismo, actividad física y peso, con tablero de indicadores para orientar la gestión sanitaria local.</p>
+      <ul class="login-points">
+        <li>Carga desde el celular, también sin señal</li>
+        <li>Alertas de derivación en el momento</li>
+        <li>Indicadores comparables con la Encuesta Nacional de Factores de Riesgo</li>
+      </ul>
+    </div>
+    <small class="login-foot">© Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud</small>
+  </aside>
+  <main class="login-main">
+    <form id="fLogin" class="login-card" novalidate>
+      <h2>Ingresar</h2>
+      <p class="muted">Usá el usuario y la contraseña que te asignamos.</p>
+      <div class="f"><label for="lUser">Usuario</label><input id="lUser" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ej.: malvinas-argentinas" required></div>
+      <div class="f"><label for="lPass">Contraseña</label><input id="lPass" type="password" autocomplete="current-password" required></div>
+      <p id="lErr" class="err" hidden></p>
+      <button class="btn btn-primary btn-block" id="lBtn" type="submit">Ingresar</button>
+      <p class="muted small">¿Tu municipio todavía no tiene acceso? <a href="https://wa.me/5493515288994?text=Hola%20Juli%C3%A1n%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Observatorio%20de%20Riesgo%20Cardiovascular" target="_blank" rel="noopener">Escribime por WhatsApp</a></p>
+      <a href="/" class="back">← Volver a julianrosonovich-epi</a>
+    </form>
+  </main>
+</div>
+
+<!-- ================= APLICACIÓN ================= -->
+<div id="vApp" hidden>
+  <header class="app-head">
+    <div class="wrap head-row">
+      <a href="/" class="logo logo-light" aria-label="Ir a la web">
+        <img class="logo-iso" src="/plataforma/logo.png" alt="">
+        <span class="logo-text"><strong>Observatorio RCV</strong><span>JULIÁN ROSONOVICH · EPIDEMIOLOGÍA</span></span>
+      </a>
+      <div class="head-ctx">
+        <span id="syncBadge" class="sync" hidden></span>
+        <select id="ctxMuni" aria-label="Municipio" hidden></select>
+        <span id="muniName" class="muni-name"></span>
+        <button class="btn btn-ghost-light btn-sm" id="bLogout" type="button">Salir</button>
+      </div>
+    </div>
+    <div class="wrap">
+      <p class="hello" id="hello"></p>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="form">Relevamiento</button>
+        <button role="tab" data-tab="dash" data-roles="admin gestor">Tablero</button>
+        <button role="tab" data-tab="base">Encuestas</button>
+        <button role="tab" data-tab="admin" data-roles="admin">Administración</button>
+        <button role="tab" data-tab="met">Metodología</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap app-main">
+    <div id="noRole" class="notice warn" hidden><b>Tu usuario todavía no tiene un municipio asignado.</b> Pedile al administrador que lo active.</div>
+
+    <!-- RELEVAMIENTO -->
+    <section id="p-form" role="tabpanel" hidden>
+      <form id="enc" novalidate>
+        <fieldset>
+          <legend>1. Identificación <span>sin nombre ni DNI: la encuesta es anónima</span></legend>
+          <div class="grid">
+            <div class="f"><label for="codigo">Código de encuesta</label><input id="codigo" readonly></div>
+            <div class="f"><label for="fecha">Fecha</label><input id="fecha" type="date" required></div>
+            <div class="f" id="fMuniWrap"><label for="municipio">Municipio</label><select id="municipio" required></select></div>
+            <div class="f"><label for="zona">Barrio / zona</label><input id="zona" list="dlZona" required placeholder="Barrio, sección o radio censal"></div>
+            <div class="f"><label for="encuestador">Encuestador/a</label><input id="encuestador" required placeholder="Nombre o código"></div>
+          </div>
+          <label class="chk mt"><input type="checkbox" id="consent" required> <span>La persona recibió la información del estudio y <b>dio su consentimiento verbal</b> para participar y para las mediciones.</span></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>2. Datos sociodemográficos</legend>
+          <div class="grid">
+            <div class="f"><label for="sexo">Sexo registrado al nacer</label><select id="sexo" required><option value="">—</option><option value="F">Femenino</option><option value="M">Masculino</option></select></div>
+            <div class="f"><label for="edad">Edad</label><input id="edad" type="number" min="18" max="110" inputmode="numeric" required><span class="unit">años (18 o más)</span></div>
+            <div class="f"><label for="educacion">Máximo nivel educativo</label><select id="educacion"><option value="">—</option><option>Hasta primario incompleto</option><option>Primario completo</option><option>Secundario incompleto</option><option>Secundario completo</option><option>Terciario/universitario</option></select></div>
+            <div class="f"><label for="cobertura">Cobertura de salud</label><select id="cobertura"><option value="">—</option><option>Solo pública</option><option>Obra social / PAMI</option><option>Prepaga</option></select></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>3. Tabaco, alcohol y alimentación <span>autorreporte · preguntas armonizadas con la ENFR</span></legend>
+          <div class="grid">
+            <div class="f"><label for="tabaco">¿Fuma cigarrillos actualmente?</label><select id="tabaco" required><option value="">—</option><option value="diario">Sí, todos los días</option><option value="ocasional">Sí, algunos días</option><option value="ex">Fumó, ya no fuma</option><option value="nunca">Nunca fumó</option></select></div>
+            <div class="f"><label for="cigDia">Cigarrillos por día</label><input id="cigDia" type="number" min="0" max="80" inputmode="numeric"></div>
+            <div class="f"><label for="fyv">Porciones de frutas y verduras por día</label><input id="fyv" type="number" min="0" max="15" step="0.5" inputmode="decimal" required><span class="unit">promedio de una semana típica</span></div>
+            <div class="f"><label for="sal">¿Agrega sal en la mesa o después de cocinar?</label><select id="sal"><option value="">—</option><option value="siempre">Siempre o casi siempre</option><option value="aveces">A veces</option><option value="nunca">Nunca</option></select></div>
+          </div>
+          <div class="grid mt">
+            <label class="chk"><input type="checkbox" id="humo"> <span>Expuesta/o a humo de tabaco ajeno en casa o trabajo</span></label>
+            <label class="chk"><input type="checkbox" id="alcohol"> <span>Consumo episódico excesivo en el último mes (5+ tragos varones, 4+ mujeres en una ocasión)</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>4. Actividad física <span>última semana · IPAQ versión corta</span></legend>
+          <div class="grid">
+            <div class="f"><span class="lbl">Actividad intensa</span><div class="pair"><input id="vigD" type="number" min="0" max="7" inputmode="numeric" placeholder="días" aria-label="Días de actividad intensa"><input id="vigM" type="number" min="0" max="600" inputmode="numeric" placeholder="min/día" aria-label="Minutos por día de actividad intensa"></div><span class="unit">correr, cargar peso, fútbol</span></div>
+            <div class="f"><span class="lbl">Actividad moderada</span><div class="pair"><input id="modD" type="number" min="0" max="7" inputmode="numeric" placeholder="días" aria-label="Días de actividad moderada"><input id="modM" type="number" min="0" max="600" inputmode="numeric" placeholder="min/día" aria-label="Minutos por día de actividad moderada"></div><span class="unit">bici a ritmo suave, tareas pesadas de la casa</span></div>
+            <div class="f"><span class="lbl">Caminata</span><div class="pair"><input id="camD" type="number" min="0" max="7" inputmode="numeric" placeholder="días" aria-label="Días de caminata"><input id="camM" type="number" min="0" max="600" inputmode="numeric" placeholder="min/día" aria-label="Minutos por día de caminata"></div><span class="unit">al menos 10 minutos seguidos</span></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>5. Mediciones físicas <span>tensiómetro validado · balanza · cinta métrica · glucómetro</span></legend>
+          <div class="grid">
+            <div class="f"><label for="peso">Peso</label><input id="peso" type="number" step="0.1" min="30" max="250" inputmode="decimal" required><span class="unit">kg</span></div>
+            <div class="f"><label for="talla">Talla</label><input id="talla" type="number" step="0.5" min="120" max="210" inputmode="decimal" required><span class="unit">cm</span></div>
+            <div class="f"><label for="cintura">Circunferencia de cintura</label><input id="cintura" type="number" step="0.5" min="50" max="200" inputmode="decimal"><span class="unit">cm, a nivel umbilical</span></div>
+            <div class="f"><span class="lbl">Presión arterial · 1ª toma</span><div class="pair"><input id="pas1" type="number" min="70" max="260" inputmode="numeric" placeholder="PAS" aria-label="Presión sistólica, primera toma" required><input id="pad1" type="number" min="40" max="160" inputmode="numeric" placeholder="PAD" aria-label="Presión diastólica, primera toma" required></div><span class="unit">mmHg, sentado, tras 5 min de reposo</span></div>
+            <div class="f"><span class="lbl">Presión arterial · 2ª toma</span><div class="pair"><input id="pas2" type="number" min="70" max="260" inputmode="numeric" placeholder="PAS" aria-label="Presión sistólica, segunda toma"><input id="pad2" type="number" min="40" max="160" inputmode="numeric" placeholder="PAD" aria-label="Presión diastólica, segunda toma"></div><span class="unit">mmHg, 1–2 min después</span></div>
+            <div class="f"><label for="glucemia">Glucemia capilar</label><input id="glucemia" type="number" min="20" max="600" inputmode="numeric"><span class="unit">mg/dL</span></div>
+            <div class="f"><label for="ayunas">Condición de la glucemia</label><select id="ayunas"><option value="si">En ayunas (8 h o más)</option><option value="no">Sin ayuno</option></select></div>
+            <div class="f"><label for="colTotal">Colesterol total capilar (opcional)</label><input id="colTotal" type="number" min="60" max="500" inputmode="numeric"><span class="unit">mg/dL</span></div>
+          </div>
+          <div class="live" id="livePills"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>6. Antecedentes conocidos <span>"¿Algún médico o profesional de la salud le dijo que tiene…?"</span></legend>
+          <div class="grid">
+            <label class="chk"><input type="checkbox" id="htaDx"> <span>Presión alta</span></label>
+            <label class="chk"><input type="checkbox" id="htaTto"> <span>Toma medicación para la presión</span></label>
+            <label class="chk"><input type="checkbox" id="dbtDx"> <span>Diabetes o azúcar alta</span></label>
+            <label class="chk"><input type="checkbox" id="dbtTto"> <span>Toma medicación o insulina para la diabetes</span></label>
+            <label class="chk"><input type="checkbox" id="colDx"> <span>Colesterol alto</span></label>
+            <label class="chk"><input type="checkbox" id="evCV"> <span>Infarto, ACV o angina</span></label>
+          </div>
+        </fieldset>
+
+        <div id="resultBox" hidden></div>
+
+        <div class="formbar">
+          <span class="muted" id="formMsg">Presión, peso, talla y hábitos son obligatorios.</span>
+          <div class="btn-row">
+            <button type="button" class="btn btn-ghost" id="btnReset">Nueva encuesta</button>
+            <button type="submit" class="btn btn-primary" id="btnSave">Guardar encuesta</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- TABLERO -->
+    <section id="p-dash" role="tabpanel" hidden>
+      <div id="dashEmpty" class="panel empty" hidden>
+        <h3>Todavía no hay encuestas cargadas</h3>
+        <p class="muted">Cuando el equipo de campo guarde las primeras encuestas, acá vas a ver las prevalencias, los hallazgos para la gestión y la comparación por zona.</p>
+        <button class="btn btn-primary" type="button" data-go="form">Cargar una encuesta</button>
+      </div>
+      <div id="dashBody">
+        <div class="filters">
+          <div class="seg" role="group" aria-label="Sexo">
+            <button type="button" data-sexo="" aria-pressed="true">Todos</button><button type="button" data-sexo="F" aria-pressed="false">Mujeres</button><button type="button" data-sexo="M" aria-pressed="false">Varones</button>
+          </div>
+          <label class="inl" for="fZona">Zona <select id="fZona"></select></label>
+          <label class="inl" for="fEdad">Edad <select id="fEdad"><option value="">Todas</option><option value="18-34">18–34</option><option value="35-49">35–49</option><option value="50-64">50–64</option><option value="65+">65 y más</option></select></label>
+          <button class="btn btn-ghost btn-sm" type="button" id="bRefresh">Actualizar</button>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="panels">
+          <div class="panel">
+            <h3>Prevalencia de factores de riesgo</h3>
+            <p class="sub">% de personas de 18 años y más · línea fina = IC 95% · marca naranja = ENFR 2018, total país (autorreporte)</p>
+            <div class="chart" id="chPrev"></div>
+            <div class="legend"><span><i class="c1"></i>Medido</span><span><i class="c2"></i>Autorreportado</span><span><i class="c3"></i>ENFR 2018</span></div>
+          </div>
+          <div class="panel">
+            <h3>Hallazgos para la gestión</h3>
+            <p class="sub">Se recalculan con cada encuesta</p>
+            <ul class="findings" id="findings"></ul>
+          </div>
+        </div>
+        <div class="panels mt">
+          <div class="panel">
+            <h3>Hipertensión, obesidad y glucemia elevada por edad</h3>
+            <p class="sub">% dentro de cada grupo</p>
+            <div class="chart" id="chEdad"></div>
+            <div class="legend"><span><i class="c1"></i>Hipertensión</span><span><i class="c2"></i>Obesidad</span><span><i class="c3"></i>Glucemia elevada / DBT</span></div>
+          </div>
+          <div class="panel">
+            <h3>Factores de riesgo acumulados</h3>
+            <p class="sub">Tabaco, HTA, glucemia elevada, obesidad, actividad física baja, colesterol elevado</p>
+            <div class="chart" id="chAcum"></div>
+          </div>
+        </div>
+        <div class="panel mt">
+          <h3>Comparación por zona</h3>
+          <p class="sub">Para priorizar operativos territoriales. Con menos de 30 encuestas por zona, interpretar con cautela.</p>
+          <div class="tbl"><table id="tZona"></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENCUESTAS -->
+    <section id="p-base" role="tabpanel" hidden>
+      <div class="row">
+        <div><h3>Encuestas</h3><span class="muted" id="baseCount"></span></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost btn-sm" id="btnSync" type="button" hidden>Subir pendientes</button>
+          <button class="btn btn-primary btn-sm" id="btnCsv" type="button" data-roles="admin gestor">Descargar CSV</button>
+        </div>
+      </div>
+      <p class="muted" id="baseHelp">Una fila por persona, con las variables originales y las derivadas (IMC, PA promedio, MET-min/semana, factores acumulados). El CSV abre en Excel, SPSS, R o Jamovi.</p>
+      <div class="tbl tall"><table id="tBase"></table></div>
+    </section>
+
+    <!-- ADMINISTRACIÓN -->
+    <section id="p-admin" role="tabpanel" hidden>
+      <div class="panels">
+        <div class="panel">
+          <h3>Municipios</h3>
+          <p class="sub">Cada municipio es un cliente con su propio tablero.</p>
+          <form id="fMuni" class="inline-form" novalidate>
+            <div class="f"><label for="mNombre">Nombre</label><input id="mNombre" placeholder="Malvinas Argentinas" required></div>
+            <div class="f"><label for="mId">Usuario base</label><input id="mId" placeholder="malvinas-argentinas" required autocapitalize="none"></div>
+            <button class="btn btn-primary btn-sm" type="submit">Agregar</button>
+          </form>
+          <div class="tbl mt"><table id="tMunis"></table></div>
+        </div>
+        <div class="panel">
+          <h3>Crear usuario</h3>
+          <p class="sub">El usuario entra con estos datos desde tu web → Acceso clientes.</p>
+          <form id="fUser" novalidate>
+            <div class="grid g2">
+              <div class="f"><label for="uMuni">Municipio</label><select id="uMuni" required></select></div>
+              <div class="f"><label for="uRol">Rol</label><select id="uRol" required><option value="gestor">Gestor (intendencia: tablero y carga)</option><option value="encuestador">Encuestador (solo carga)</option><option value="admin">Administrador</option></select></div>
+              <div class="f"><label for="uUser">Usuario</label><input id="uUser" required autocapitalize="none" placeholder="malvinas-argentinas"></div>
+              <div class="f"><label for="uPass">Contraseña</label><input id="uPass" required minlength="8" placeholder="mínimo 8 caracteres"></div>
+              <div class="f"><label for="uNombre">Nombre (opcional)</label><input id="uNombre" placeholder="Secretaría de Salud"></div>
+            </div>
+            <p id="uMsg" class="muted small"></p>
+            <button class="btn btn-primary btn-sm" type="submit" id="uBtn">Crear usuario</button>
+          </form>
+        </div>
+      </div>
+      <div class="panel mt">
+        <h3>Usuarios</h3>
+        <p class="sub">Cambiá el municipio o el rol de cualquier usuario. Sin rol, el usuario no puede ver ni cargar nada.</p>
+        <div class="tbl"><table id="tUsers"></table></div>
+      </div>
+    </section>
+
+    <!-- METODOLOGÍA -->
+    <section id="p-met" role="tabpanel" hidden>
+      <div class="prose">
+        <h2>Cómo funciona el sistema</h2>
+        <p>Equipos de promotores y agentes sanitarios recorren el municipio con un celular o tablet, aplican una encuesta breve de unos 15 minutos y toman mediciones físicas. Cada encuesta se guarda en una base centralizada y el tablero se actualiza separado por zona, sexo y edad. Si no hay señal, la encuesta queda guardada en el teléfono y se sube sola cuando vuelve la conexión.</p>
+        <p>El instrumento sigue el método STEPS de la OMS (cuestionario, mediciones físicas y bioquímicas) y usa preguntas armonizadas con la Encuesta Nacional de Factores de Riesgo (ENFR), lo que permite comparar al municipio con la provincia y el país y repetir el relevamiento para medir tendencias.</p>
+        <h3>Etapas de implementación</h3>
+        <ol>
+          <li><b>Diagnóstico y diseño muestral.</b> Definición de zonas, tamaño de muestra y estrategia de selección de hogares.</li>
+          <li><b>Capacitación del equipo de campo.</b> Entrevista, toma estandarizada de presión, antropometría y glucemia capilar; consentimiento y circuito de derivación.</li>
+          <li><b>Relevamiento.</b> Carga directa en la plataforma, con alertas de derivación en el momento.</li>
+          <li><b>Análisis e informe.</b> Prevalencias con intervalos de confianza, comparación con la ENFR, priorización por zona y recomendaciones.</li>
+          <li><b>Seguimiento.</b> Repetición anual o bianual para evaluar el impacto de las intervenciones.</li>
+        </ol>
+        <h3>Tamaño de muestra orientativo</h3>
+        <p>Para estimar una prevalencia del 35% con un error de ±5 puntos y 95% de confianza hacen falta unas <b>350 personas</b>; con efecto de diseño 1,5 por muestreo por conglomerados, unas <b>525</b>. Para comparar zonas entre sí se recomiendan al menos 100 personas por zona.</p>
+      </div>
+      <h2 class="h2-sec">Definiciones operativas</h2>
+      <div class="tbl"><table class="deftbl">
+        <thead><tr><th>Indicador</th><th>Definición</th><th>Fuente</th></tr></thead>
+        <tbody>
+          <tr><td>Hipertensión arterial</td><td>Promedio de 2 tomas con PAS ≥ 140 o PAD ≥ 90 mmHg, o tratamiento antihipertensivo actual.</td><td>Medido</td></tr>
+          <tr><td>HTA no diagnosticada</td><td>PA elevada en la medición sin diagnóstico previo referido.</td><td>Medido + autorreporte</td></tr>
+          <tr><td>Glucemia elevada / diabetes</td><td>Glucemia capilar ≥ 126 mg/dL en ayunas o ≥ 200 sin ayuno, o diagnóstico/tratamiento de diabetes referido.</td><td>Medido + autorreporte</td></tr>
+          <tr><td>Obesidad / sobrepeso</td><td>IMC ≥ 30 / IMC 25 a 29,9 kg/m².</td><td>Medido</td></tr>
+          <tr><td>Obesidad abdominal</td><td>Cintura &gt; 88 cm en mujeres o &gt; 102 cm en varones.</td><td>Medido</td></tr>
+          <tr><td>Tabaquismo actual</td><td>Fuma cigarrillos todos los días o algunos días.</td><td>Autorreporte</td></tr>
+          <tr><td>Actividad física baja</td><td>Menos de 600 MET-min/semana (IPAQ: intensa × 8, moderada × 4, caminata × 3,3).</td><td>Autorreporte</td></tr>
+          <tr><td>Consumo insuficiente de frutas y verduras</td><td>Menos de 5 porciones diarias.</td><td>Autorreporte</td></tr>
+          <tr><td>Colesterol elevado</td><td>Colesterol total ≥ 240 mg/dL o diagnóstico referido.</td><td>Medido + autorreporte</td></tr>
+          <tr><td>Factores acumulados</td><td>Suma de tabaco, HTA, glucemia elevada, obesidad, actividad física baja y colesterol elevado. Se informa el % con 3 o más.</td><td>Derivado</td></tr>
+        </tbody>
+      </table></div>
+      <div class="prose">
+        <h3>Criterios de derivación en terreno</h3>
+        <p>La plataforma avisa al encuestador cuando corresponde derivar: PA ≥ 180/110 mmHg o glucemia ≥ 250 mg/dL (o menor de 70), derivación el mismo día; PA elevada sin diagnóstico o glucemia elevada, turno en el centro de salud. Los umbrales se ajustan al protocolo local de atención primaria.</p>
+        <h3>Protección de datos</h3>
+        <p>La base no guarda nombre, DNI ni domicilio: cada persona se identifica con un código. Los datos de salud son datos sensibles (Ley 25.326), por lo que se requiere consentimiento informado. Cada municipio accede solo a sus propios datos y es titular de su base. Si los resultados se publican, se recomienda la aprobación de un comité de ética.</p>
+        <h3>Referencias</h3>
+        <p class="muted small">Ministerio de Salud de la Nación – INDEC. 4ª Encuesta Nacional de Factores de Riesgo, 2018. OMS. Manual STEPS de vigilancia de factores de riesgo de ENT. IPAQ Research Committee. Guías de procesamiento del IPAQ.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-foot"><div class="wrap"><span>© Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud · Córdoba</span><span>WhatsApp 351 528-8994 · julianrosonovich.epi@gmail.com</span></div></footer>
+</div>
+
+<div id="vLoading" class="loading"><img src="/plataforma/logo.png" alt="" width="64"><span>Cargando…</span></div>
+<div class="toast" id="toast" hidden></div>
+<datalist id="dlZona"></datalist>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="/plataforma/config.js"></script>
+<script src="/plataforma/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "Observatorio de Riesgo Cardiovascular",
+  "short_name": "Observatorio RCV",
+  "description": "Relevamiento y tablero de factores de riesgo cardiovascular. Julián Rosonovich · Epidemiología.",
+  "start_url": "/plataforma/",
+  "scope": "/plataforma/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#0E2D51",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "/plataforma/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/plataforma/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

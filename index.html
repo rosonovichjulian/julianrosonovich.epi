@@ -139,6 +139,14 @@ header.scrolled{border-bottom-color:var(--line)}
 .proj p{margin:0;color:#D5DEE8;font-size:16px}
 .proj a{color:var(--teal-soft);font-weight:600;margin-top:auto}
 .proj a:hover{color:#fff}
+.proj.wide{grid-column:1/-1;display:grid;grid-template-columns:1.4fr 1fr;gap:12px 40px;align-items:center}
+.proj.wide .proj-body{display:flex;flex-direction:column;gap:12px}
+.proj.wide .proj-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:#D5DEE8;font-size:15px}
+.proj.wide .proj-list li{padding-left:22px;position:relative}
+.proj.wide .proj-list li::before{content:"";position:absolute;left:0;top:8px;width:10px;height:10px;border-radius:50%;background:var(--teal)}
+.proj .proj-ctas{display:flex;gap:18px;flex-wrap:wrap;margin-top:auto}
+.nav-links a.nav-access{color:var(--teal)}
+@media (max-width:760px){.proj.wide{grid-template-columns:1fr}}
 
 /* Content / social */
 .social{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
@@ -211,6 +219,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap
       <a href="#como-trabajo">Cómo trabajo</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#proyectos">Proyectos</a>
+      <a href="/plataforma/" class="nav-access">Acceso clientes</a>
       <a href="#contacto" class="btn btn-primary">Consultar</a>
     </nav>
   </div>
@@ -389,6 +398,23 @@ footer .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap
         <h3>DoctorMétodo</h3>
         <p>Sistema de seguimiento de trabajos de investigación para comités: presentación, evaluación, observaciones y biblioteca de trabajos aprobados.</p>
         <a href="https://dr-metodo.vercel.app" target="_blank" rel="noopener">Ver DoctorMétodo →</a>
+      </article>
+      <article class="proj wide reveal">
+        <div class="proj-body">
+          <span class="tag">Para municipios</span>
+          <h3>Observatorio de Riesgo Cardiovascular</h3>
+          <p>Sistema de relevamiento territorial y análisis de factores de riesgo cardiovascular para gobiernos locales: presión arterial, glucemia, tabaquismo, actividad física y peso, con un tablero de indicadores para orientar la gestión sanitaria.</p>
+          <div class="proj-ctas">
+            <a href="/plataforma/">Ingresar a la plataforma →</a>
+            <a href="https://wa.me/5493515288994?text=Hola%20Juli%C3%A1n%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20Observatorio%20de%20Riesgo%20Cardiovascular" target="_blank" rel="noopener">Pedir una presentación →</a>
+          </div>
+        </div>
+        <ul class="proj-list">
+          <li>Carga desde el celular, también sin señal</li>
+          <li>Alertas de derivación en el momento de la medición</li>
+          <li>Indicadores comparables con la Encuesta Nacional de Factores de Riesgo</li>
+          <li>Cada municipio accede solo a sus datos</li>
+        </ul>
       </article>
     </div>
   </div>
