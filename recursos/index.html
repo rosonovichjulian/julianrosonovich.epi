@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recursos gratis para investigar · Julián Rosonovich</title>
+<meta name="description" content="Plantillas y herramientas gratuitas de metodología de la investigación y epidemiología: planilla PICO, matriz de consistencia, operacionalización de variables y más.">
+<meta property="og:title" content="Recursos gratis para investigar en salud">
+<meta property="og:description" content="Plantillas y herramientas de metodología de la investigación para tu tesis o proyecto.">
+<link rel="icon" type="image/png" href="/plataforma/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<script src="/recursos/acceso.js"></script>
+<style>
+:root{
+  --navy:#0E2D51; --navy-2:#163E6B; --teal:#12888C; --teal-soft:#7FD3D3; --mint:#EEF6F6;
+  --ink:#1E2A36; --muted:#5A6B7B; --line:#C9D3DD; --bg:#FFFFFF; --radius:12px; --max:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Montserrat,system-ui,sans-serif;color:var(--navy);margin:0;line-height:1.2}
+a{color:var(--teal);text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--navy)}
+.logo img{height:40px;width:auto;display:block}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text strong{font-family:Montserrat,sans-serif;font-size:16px;font-weight:700}
+.logo-text span{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.06em}
+.nav-links{display:flex;gap:22px;align-items:center}
+.nav-links a{color:var(--ink);font-weight:600;font-size:15px}
+.nav-links a.on{color:var(--teal)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s,color .15s;background:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#0E7478;color:#fff}
+.btn-ghost{border-color:var(--navy);color:var(--navy)}
+.btn-ghost:hover{background:var(--navy);color:#fff}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+
+.hero{background:var(--navy);color:#fff;padding:60px 0 66px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(560px 360px at 88% 10%,rgba(18,136,140,.38),transparent 70%),radial-gradient(420px 260px at 0% 120%,rgba(127,211,211,.14),transparent 70%)}
+.hero .wrap{position:relative;max-width:var(--max)}
+.hero .eyebrow{color:var(--teal-soft)}
+.hero h1{color:#fff;font-size:clamp(30px,4.6vw,48px);margin:12px 0 14px;max-width:760px}
+.hero h1 em{font-style:normal;color:var(--teal-soft)}
+.hero p{color:#D5DEE8;max-width:640px;margin:0;font-size:18px}
+.badge-open{display:none;margin-top:22px;align-items:center;gap:8px;background:rgba(127,211,211,.14);border:1px solid rgba(127,211,211,.4);color:var(--teal-soft);font-weight:600;font-size:15px;padding:8px 14px;border-radius:999px}
+body.unlocked .badge-open{display:inline-flex}
+
+section{padding:52px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.res{border:1px solid var(--line);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:10px;background:#fff;position:relative;transition:border-color .2s,box-shadow .2s,transform .2s}
+.res.live:hover{border-color:var(--teal);box-shadow:0 12px 30px -18px rgba(14,45,81,.4);transform:translateY(-2px)}
+.res .top{display:flex;justify-content:space-between;align-items:center}
+.res .ico{width:46px;height:46px;border-radius:11px;background:var(--navy);display:grid;place-items:center}
+.res .ico svg{width:23px;height:23px;stroke:var(--teal-soft);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tag{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.tag.ok{background:var(--teal);color:#fff}
+.tag.soon{background:var(--mint);color:var(--muted)}
+.res h3{font-size:18px}
+.res p{margin:0;color:var(--muted);font-size:15px}
+.res .go{margin-top:auto;padding-top:6px}
+.res .go .lock,.res .go .open{display:inline-flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px}
+.res .go .open{display:none}
+body.unlocked .res .go .lock{display:none}
+body.unlocked .res .go .open{display:inline-flex}
+.res .go svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.res.soon{background:#FBFCFD}
+.res.soon h3{color:#3C5370}
+.res.soon .ico{background:#DCE5EE}
+.res.soon .ico svg{stroke:#6F8399}
+
+.gate{background:var(--mint)}
+.gate-box{display:grid;grid-template-columns:1fr 1.1fr;gap:44px;align-items:start}
+.gate-copy h2{font-size:clamp(24px,3vw,34px);margin:10px 0 14px}
+.gate-copy p{color:var(--muted);margin:0 0 14px}
+.gate-copy ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.gate-copy li{display:flex;gap:10px;align-items:flex-start;font-size:16px}
+.gate-copy li::before{content:"";flex-shrink:0;width:20px;height:20px;margin-top:2px;border-radius:50%;background:var(--teal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12 4 4 8-8'/%3E%3C/svg%3E") center/13px no-repeat}
+form{background:#fff;border-radius:18px;padding:28px;box-shadow:0 18px 40px -28px rgba(14,45,81,.45);display:grid;gap:14px}
+.f label{display:block;font-family:Montserrat,sans-serif;font-weight:600;font-size:14px;color:var(--navy);margin-bottom:6px}
+.f input[type=text],.f input[type=email],.f input[type=tel],.f select{width:100%;font:inherit;font-size:16px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:#FBFCFD;color:var(--ink)}
+.f input:focus,.f select:focus{outline:none;border-color:var(--teal);background:#fff}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink);cursor:pointer}
+.check input{accent-color:var(--teal);width:18px;height:18px;margin-top:3px;flex-shrink:0}
+#wa-wrap{display:none}
+#wa-wrap.show{display:block}
+.legal{font-size:13px;color:var(--muted);margin:0}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.err{display:none;color:#B42318;font-size:14px;background:#FEF3F2;border-radius:8px;padding:8px 12px}
+.err.show{display:block}
+.done{display:none;text-align:center;padding:10px 4px}
+.done .big{width:64px;height:64px;border-radius:50%;background:var(--teal);margin:0 auto 14px;display:grid;place-items:center}
+.done .big svg{width:32px;height:32px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.done h3{font-size:22px;margin-bottom:6px}
+.done p{color:var(--muted);margin:0 0 18px}
+body.unlocked .gate{display:none}
+
+.help{display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--navy);border-radius:18px;padding:28px 32px;color:#fff}
+.help h2{color:#fff;font-size:21px;margin-bottom:4px}
+.help p{margin:0;color:#D5DEE8}
+footer{padding:28px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:960px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gate-box{grid-template-columns:1fr}}
+@media (max-width:760px){.nav-links a:not(.keep){display:none}.help{flex-direction:column;align-items:flex-start}}
+@media (max-width:620px){
+  body{font-size:16px}.wrap{padding:0 16px}.hero{padding:42px 0 48px}section{padding:40px 0}
+  .grid{grid-template-columns:1fr}.logo-text span{display:none}form{padding:22px}
+}
+</style>
+</head>
+<body>
+<script>if (window.JR_ACCESO && JR_ACCESO.desbloqueado()) document.body.classList.add('unlocked');</script>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Inicio">
+      <img src="/plataforma/logo.png" alt="">
+      <span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="/#servicios">Servicios</a>
+      <a href="/recursos/" class="on keep">Recursos gratis</a>
+      <a href="/plataforma/">Acceso clientes</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Recursos gratis</span>
+    <h1>Herramientas para <em>investigar mejor</em>, desde la primera idea</h1>
+    <p>Plantillas y herramientas de metodología de la investigación y epidemiología que uso en mis asesorías. Gratis para tu tesis, tu residencia o tu proyecto.</p>
+    <span class="badge-open">✓ Tenés acceso a todos los recursos</span>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="grid" id="grid">
+      <article class="res live">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9.1 9a3 3 0 1 1 4.4 2.6c-.9.5-1.5 1.3-1.5 2.4v.5"/><circle cx="12" cy="18" r=".6"/><circle cx="12" cy="12" r="10"/></svg></div><span class="tag ok">Disponible</span></div>
+        <h3>Planilla PICO / PECO</h3>
+        <p>Armá tu pregunta de investigación paso a paso, con test FINER y descarga en PDF.</p>
+        <div class="go">
+          <a class="lock" href="#desbloquear" data-r="pico"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Desbloquear gratis</a>
+          <a class="open" href="/pico/">Abrir planilla →</a>
+        </div>
+      </article>
+      <article class="res soon">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><span class="tag soon">Próximamente</span></div>
+        <h3>Matriz de consistencia</h3>
+        <p>Alineá pregunta, objetivos, variables y diseño en una sola tabla.</p>
+      </article>
+      <article class="res soon">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="16" r="3"/></svg></div><span class="tag soon">Próximamente</span></div>
+        <h3>Operacionalización de variables</h3>
+        <p>Definí cada variable: tipo, escala, categorías y cómo la medís.</p>
+      </article>
+      <article class="res soon">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 11h.01M12 11h.01M15 11h.01M9 15h.01M12 15h.01M15 15h.01M9 18h6"/></svg></div><span class="tag soon">Próximamente</span></div>
+        <h3>Calculadora de tamaño de muestra</h3>
+        <p>Calculá cuántos participantes necesitás para estimar una proporción o comparar grupos.</p>
+      </article>
+      <article class="res soon">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div><span class="tag soon">Próximamente</span></div>
+        <h3>Checklist para el comité de ética</h3>
+        <p>Revisá tu protocolo antes de presentarlo, con criterios de un integrante de comité.</p>
+      </article>
+      <article class="res soon">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><span class="tag soon">Próximamente</span></div>
+        <h3>Registro de búsqueda bibliográfica</h3>
+        <p>Términos DeCS/MeSH, fórmulas de búsqueda y resultados por base de datos.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="gate" id="desbloquear">
+  <div class="wrap gate-box">
+    <div class="gate-copy">
+      <span class="eyebrow">Acceso gratuito</span>
+      <h2>Desbloqueá todos los recursos</h2>
+      <p>Dejá tus datos una sola vez y accedé a todas las plantillas, incluidas las que vaya sumando.</p>
+      <ul>
+        <li>Acceso inmediato, sin costo</li>
+        <li>Te aviso cuando subo una herramienta nueva</li>
+        <li>Sin spam: podés darte de baja cuando quieras</li>
+      </ul>
+    </div>
+    <div>
+      <form id="form" novalidate>
+        <div class="f"><label for="nombre">Nombre</label><input id="nombre" type="text" autocomplete="name" required maxlength="120"></div>
+        <div class="f"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required maxlength="200"></div>
+        <div class="f"><label for="perfil">¿Cuál es tu perfil?</label>
+          <select id="perfil" required>
+            <option value="">Elegí una opción</option>
+            <option value="estudiante">Estudiante (grado o posgrado)</option>
+            <option value="residente">Residente</option>
+            <option value="profesional">Profesional de la salud</option>
+            <option value="docente">Docente / investigador</option>
+            <option value="institucion">Institución de salud</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <label class="check"><input type="checkbox" id="acepta-wa"> Quiero recibir novedades también por WhatsApp</label>
+        <div class="f" id="wa-wrap"><label for="wa">Tu WhatsApp</label><input id="wa" type="tel" autocomplete="tel" placeholder="Ej.: 351 123-4567" maxlength="30"></div>
+        <div class="hp" aria-hidden="true"><label for="web">No completar</label><input id="web" type="text" tabindex="-1" autocomplete="off"></div>
+        <p class="err" id="err"></p>
+        <button class="btn btn-primary" type="submit" id="send">Desbloquear recursos</button>
+        <p class="legal">Tus datos se usan solo para darte acceso y enviarte novedades de Julián Rosonovich · Epidemiología. No se comparten con terceros.</p>
+      </form>
+      <div class="done" id="done">
+        <div class="big"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h3>¡Listo, ya tenés acceso!</h3>
+        <p>Podés usar todos los recursos desde este dispositivo.</p>
+        <a class="btn btn-primary" id="go-res" href="/pico/">Abrir la planilla PICO</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="help">
+      <div><h2>¿Necesitás ayuda con tu investigación?</h2><p>Asesoría de tesis, análisis de datos y capacitaciones para equipos de salud.</p></div>
+      <a class="btn btn-primary" href="https://wa.me/5493515288994?text=Hola%20Juli%C3%A1n%2C%20vengo%20desde%20Recursos%20gratis%20y%20quiero%20hacer%20una%20consulta" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud</span>
+    <a href="https://www.instagram.com/julianrosonovich.epi/" target="_blank" rel="noopener">@julianrosonovich.epi</a>
+  </div>
+</footer>
+
+<script src="/plataforma/config.js"></script>
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  $('#y').textContent = new Date().getFullYear();
+  const RUTAS = { pico: '/pico/' };
+  const params = new URLSearchParams(location.search);
+  const recurso = RUTAS[params.get('r')] ? params.get('r') : 'pico';
+  $('#go-res').href = RUTAS[recurso];
+
+  // If they arrived from a locked resource and are already unlocked, send them straight there.
+  if (params.get('r') && window.JR_ACCESO && JR_ACCESO.desbloqueado()) { location.replace(RUTAS[recurso]); return; }
+
+  $('#acepta-wa').addEventListener('change', e => $('#wa-wrap').classList.toggle('show', e.target.checked));
+
+  function showErr(m){ const el = $('#err'); el.textContent = m; el.classList.toggle('show', !!m); }
+
+  $('#form').addEventListener('submit', async e => {
+    e.preventDefault(); showErr('');
+    const nombre = $('#nombre').value.trim(), email = $('#email').value.trim().toLowerCase(), perfil = $('#perfil').value;
+    const aceptaWa = $('#acepta-wa').checked, wa = $('#wa').value.trim();
+    if (nombre.length < 2) return showErr('Escribí tu nombre.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showErr('Revisá tu email.');
+    if (!perfil) return showErr('Elegí tu perfil.');
+    if (aceptaWa && wa.replace(/\D/g,'').length < 8) return showErr('Escribí tu número de WhatsApp o desmarcá la opción.');
+
+    const btn = $('#send'); btn.disabled = true; btn.textContent = 'Desbloqueando…';
+    if (!$('#web').value) {   // honeypot vacío = persona real
+      const fila = { nombre, email, perfil, recurso, acepta_whatsapp: aceptaWa, whatsapp: aceptaWa ? wa : null,
+                     origen: (document.referrer || 'directo').slice(0, 200) };
+      try {
+        const C = window.OBS_CONFIG || {};
+        const r = await fetch(C.SUPABASE_URL + '/rest/v1/leads_recursos', {
+          method: 'POST',
+          headers: { 'apikey': C.SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + C.SUPABASE_ANON_KEY,
+                     'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          body: JSON.stringify(fila)
+        });
+        if (!r.ok) console.warn('No se pudo guardar el registro', r.status, await r.text());
+      } catch (err) { console.warn('No se pudo guardar el registro', err); }
+    }
+    // Never leave the person without access because of a network problem.
+    if (window.JR_ACCESO) JR_ACCESO.desbloquear('email');
+    $('#form').style.display = 'none'; $('#done').style.display = 'block';
+  });
+
+  document.querySelectorAll('.lock[data-r]').forEach(a => a.addEventListener('click', () => {
+    $('#go-res').href = RUTAS[a.dataset.r] || '/pico/';
+  }));
+})();
+</script>
+</body>
+</html>
