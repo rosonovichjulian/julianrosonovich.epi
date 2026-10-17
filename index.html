@@ -43,8 +43,8 @@ section{padding:88px 0}
 header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid transparent;transition:border-color .2s}
 header.scrolled{border-bottom-color:var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
-.nav-links{display:flex;gap:28px;align-items:center}
-.nav-links a{color:var(--ink);font-weight:600;font-size:15px}
+.nav-links{display:flex;gap:22px;align-items:center}
+.nav-links a{color:var(--ink);font-weight:600;font-size:15px;white-space:nowrap}
 .nav-links a:hover{color:var(--teal)}
 .btn{display:inline-flex;align-items:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px;padding:13px 22px;border-radius:999px;border:2px solid transparent;transition:transform .15s,background .15s,color .15s;cursor:pointer}
 .btn:hover{transform:translateY(-1px)}
@@ -185,7 +185,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap
   .steps::before{display:none}
   .portrait{aspect-ratio:4/5;max-width:420px}
 }
-@media (max-width:760px){
+@media (max-width:1060px){
   .menu-toggle{display:block}
   .nav-links{position:absolute;top:72px;left:0;right:0;background:#fff;flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 20px;border-bottom:1px solid var(--line);display:none}
   .nav-links.open{display:flex}
@@ -219,6 +219,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap
       <a href="#como-trabajo">Cómo trabajo</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#proyectos">Proyectos</a>
+      <a href="/recursos/">Recursos gratis</a>
       <a href="/plataforma/" class="nav-access">Acceso clientes</a>
       <a href="#contacto" class="btn btn-primary">Consultar</a>
     </nav>
