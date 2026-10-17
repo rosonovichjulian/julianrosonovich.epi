@@ -100,6 +100,12 @@ form{background:#fff;border-radius:18px;padding:28px;box-shadow:0 18px 40px -28p
 .done h3{font-size:22px;margin-bottom:6px}
 .done p{color:var(--muted);margin:0 0 18px}
 body.unlocked .gate{display:none}
+.switch{margin:0 0 14px;font-size:15px;color:var(--muted);text-align:center}
+.link-btn{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--teal);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.link-btn:hover{color:var(--navy)}
+#ret[hidden],#form[hidden]{display:none}
+.ret-title{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:19px;margin:0}
+.ret-note{margin:0;color:var(--muted);font-size:15px}
 
 .help{display:flex;justify-content:space-between;align-items:center;gap:20px;background:var(--navy);border-radius:18px;padding:28px 32px;color:#fff}
 .help h2{color:#fff;font-size:21px;margin-bottom:4px}
@@ -196,6 +202,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </ul>
     </div>
     <div>
+      <p class="switch" id="sw-ret">¿Ya te registraste? <button type="button" class="link-btn" id="to-ret">Entrá con tu email</button></p>
+      <form id="ret" novalidate hidden>
+        <p class="ret-title">Entrá con tu email</p>
+        <p class="ret-note">Si ya te registraste en otro dispositivo, escribí el mismo email y listo.</p>
+        <div class="f"><label for="ret-email">Email</label><input id="ret-email" type="email" autocomplete="email" maxlength="200"></div>
+        <p class="err" id="ret-err"></p>
+        <button class="btn btn-primary" type="submit" id="ret-send">Entrar</button>
+        <p class="switch" style="margin:0">¿Primera vez? <button type="button" class="link-btn" id="to-form">Registrate gratis</button></p>
+      </form>
       <form id="form" novalidate>
         <div class="f"><label for="nombre">Nombre</label><input id="nombre" type="text" autocomplete="name" required maxlength="120"></div>
         <div class="f"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required maxlength="200"></div>
@@ -219,7 +234,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       </form>
       <div class="done" id="done">
         <div class="big"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg></div>
-        <h3>¡Listo, ya tenés acceso!</h3>
+        <h3 id="done-title">¡Listo, ya tenés acceso!</h3>
         <p>Podés usar todos los recursos desde este dispositivo.</p>
         <a class="btn btn-primary" id="go-res" href="/pico/">Abrir la planilla PICO</a>
       </div>
@@ -259,35 +274,71 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
   $('#acepta-wa').addEventListener('change', e => $('#wa-wrap').classList.toggle('show', e.target.checked));
 
-  function showErr(m){ const el = $('#err'); el.textContent = m; el.classList.toggle('show', !!m); }
+  function showErr(m, id){ const el = $(id || '#err'); el.textContent = m; el.classList.toggle('show', !!m); }
+  const C = window.OBS_CONFIG || {};
+  const H = { 'apikey': C.SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + C.SUPABASE_ANON_KEY, 'Content-Type': 'application/json' };
+  const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+  // true = ya registrado · false = no existe · null = no se pudo consultar
+  async function existe(email){
+    try {
+      const r = await fetch(C.SUPABASE_URL + '/rest/v1/rpc/lead_existe', { method:'POST', headers:H, body: JSON.stringify({ p_email: email }) });
+      if (!r.ok) { console.warn('lead_existe', r.status, await r.text()); return null; }
+      return (await r.json()) === true;
+    } catch (e) { console.warn('lead_existe', e); return null; }
+  }
+  function abrir(titulo){
+    if (window.JR_ACCESO) JR_ACCESO.desbloquear('email');
+    $('#done-title').textContent = titulo;
+    $('#form').hidden = true; $('#ret').hidden = true; $('#sw-ret').style.display = 'none';
+    $('#done').style.display = 'block';
+  }
+  function mostrar(cual){
+    const ret = cual === 'ret';
+    $('#ret').hidden = !ret; $('#form').hidden = ret; $('#sw-ret').style.display = ret ? 'none' : '';
+    showErr('', '#ret-err'); showErr('');
+    (ret ? $('#ret-email') : $('#nombre')).focus();
+  }
+  $('#to-ret').addEventListener('click', () => mostrar('ret'));
+  $('#to-form').addEventListener('click', () => { if ($('#ret-email').value) $('#email').value = $('#ret-email').value; mostrar('form'); });
+  $('#ret').addEventListener('submit', async e => {
+    e.preventDefault(); showErr('', '#ret-err');
+    const email = $('#ret-email').value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return showErr('Revisá tu email.', '#ret-err');
+    const btn = $('#ret-send'); btn.disabled = true; btn.textContent = 'Buscando…';
+    const ok = await existe(email);
+    btn.disabled = false; btn.textContent = 'Entrar';
+    if (ok === false) {
+      $('#email').value = email;
+      return showErr('No encontramos ese email. Revisalo o registrate: es un minuto.', '#ret-err');
+    }
+    abrir('¡Qué bueno verte de nuevo!');   // also when the check is unavailable: never lock someone out
+  });
 
   $('#form').addEventListener('submit', async e => {
     e.preventDefault(); showErr('');
     const nombre = $('#nombre').value.trim(), email = $('#email').value.trim().toLowerCase(), perfil = $('#perfil').value;
     const aceptaWa = $('#acepta-wa').checked, wa = $('#wa').value.trim();
     if (nombre.length < 2) return showErr('Escribí tu nombre.');
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return showErr('Revisá tu email.');
+    if (!EMAIL_RE.test(email)) return showErr('Revisá tu email.');
     if (!perfil) return showErr('Elegí tu perfil.');
     if (aceptaWa && wa.replace(/\D/g,'').length < 8) return showErr('Escribí tu número de WhatsApp o desmarcá la opción.');
 
     const btn = $('#send'); btn.disabled = true; btn.textContent = 'Desbloqueando…';
-    if (!$('#web').value) {   // honeypot vacío = persona real
+    const yaEsta = await existe(email);
+    if (!$('#web').value && yaEsta !== true) {   // honeypot vacío = persona real; no duplicar emails
       const fila = { nombre, email, perfil, recurso, acepta_whatsapp: aceptaWa, whatsapp: aceptaWa ? wa : null,
                      origen: (document.referrer || 'directo').slice(0, 200) };
       try {
-        const C = window.OBS_CONFIG || {};
         const r = await fetch(C.SUPABASE_URL + '/rest/v1/leads_recursos', {
           method: 'POST',
-          headers: { 'apikey': C.SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + C.SUPABASE_ANON_KEY,
-                     'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+          headers: Object.assign({ 'Prefer': 'return=minimal' }, H),
           body: JSON.stringify(fila)
         });
         if (!r.ok) console.warn('No se pudo guardar el registro', r.status, await r.text());
       } catch (err) { console.warn('No se pudo guardar el registro', err); }
     }
     // Never leave the person without access because of a network problem.
-    if (window.JR_ACCESO) JR_ACCESO.desbloquear('email');
-    $('#form').style.display = 'none'; $('#done').style.display = 'block';
+    abrir(yaEsta === true ? '¡Ya estabas registrado/a! Acceso listo' : '¡Listo, ya tenés acceso!');
   });
 
   document.querySelectorAll('.lock[data-r]').forEach(a => a.addEventListener('click', () => {
