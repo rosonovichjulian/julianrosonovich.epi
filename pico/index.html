@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planilla PICO · Armá tu pregunta de investigación | Julián Rosonovich</title>
+<meta name="description" content="Planilla gratuita para armar tu pregunta de investigación con la estructura PICO. Completala online, mirá cómo se arma tu pregunta y descargala en PDF.">
+<meta property="og:title" content="Planilla PICO gratuita · Armá tu pregunta de investigación">
+<meta property="og:description" content="Completá Población, Intervención, Comparación y Resultado, y obtené tu pregunta de investigación lista para tu tesis.">
+<link rel="icon" type="image/png" href="/plataforma/logo.png">
+<script src="/recursos/acceso.js"></script>
+<script>if (window.JR_ACCESO) JR_ACCESO.proteger('pico');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E2D51; --navy-2:#163E6B; --teal:#12888C; --teal-soft:#7FD3D3; --mint:#EEF6F6;
+  --ink:#1E2A36; --muted:#5A6B7B; --line:#C9D3DD; --bg:#FFFFFF; --radius:12px; --max:1000px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Montserrat,system-ui,sans-serif;color:var(--navy);margin:0;line-height:1.2}
+a{color:var(--teal);text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+
+header{border-bottom:1px solid var(--line);background:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--navy)}
+.logo img{height:40px;width:auto;display:block}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text strong{font-family:Montserrat,sans-serif;font-size:16px;font-weight:700}
+.logo-text span{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.06em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s,color .15s;background:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#0E7478;color:#fff}
+.btn-ghost{border-color:var(--navy);color:var(--navy)}
+.btn-ghost:hover{background:var(--navy);color:#fff}
+.btn-light{border-color:var(--line);color:var(--muted);font-size:14px;padding:9px 16px}
+.btn-light:hover{border-color:var(--navy);color:var(--navy)}
+
+.hero{background:var(--navy);color:#fff;padding:56px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 340px at 88% 10%,rgba(18,136,140,.38),transparent 70%)}
+.hero .wrap{position:relative}
+.hero .eyebrow{color:var(--teal-soft)}
+.hero h1{color:#fff;font-size:clamp(30px,4.6vw,46px);margin:12px 0 14px}
+.hero h1 em{font-style:normal;color:var(--teal-soft)}
+.hero p{color:#D5DEE8;max-width:640px;margin:0;font-size:18px}
+.pico-letters{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.pico-letters span{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 14px 6px 6px;font-size:15px;color:#D5DEE8}
+.pico-letters b{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-size:15px}
+
+main section{padding:44px 0}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.seg{display:inline-flex;background:var(--mint);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;font-family:Montserrat,sans-serif;font-weight:600;font-size:14px;color:var(--muted);padding:9px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.type-note{color:var(--muted);font-size:15px;margin:-8px 0 22px}
+
+.fields{display:grid;gap:14px}
+.field{display:grid;grid-template-columns:64px 1fr;gap:18px;border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.field:focus-within{border-color:var(--teal);box-shadow:0 10px 28px -20px rgba(14,45,81,.45)}
+.field .letter{width:64px;height:64px;border-radius:14px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:700;font-size:28px;position:relative}
+.field.done .letter{background:var(--teal)}
+.field.done .letter::after{content:"✓";position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--teal);color:var(--teal);font-size:12px;display:grid;place-items:center}
+.field.optional .letter{background:#fff;color:var(--navy);border:2px dashed var(--line)}
+.field.optional.done .letter{background:var(--teal);color:#fff;border-color:var(--teal)}
+.field label{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:17px;display:block}
+.field label small{font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.field .help{color:var(--muted);font-size:15px;margin:2px 0 10px}
+.field textarea{width:100%;min-height:58px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:16px;color:var(--ink);background:#FBFCFD}
+.field textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.field .ex{font-size:14px;color:var(--teal);margin-top:6px}
+.field .ex b{font-weight:600;color:var(--muted)}
+
+.result{margin-top:26px;background:var(--navy);border-radius:18px;padding:30px;color:#fff;position:relative;overflow:hidden}
+.result::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 220px at 100% 0%,rgba(18,136,140,.35),transparent 70%)}
+.result>*{position:relative}
+.result .eyebrow{color:var(--teal-soft)}
+.question{font-family:Montserrat,sans-serif;font-weight:600;font-size:clamp(19px,2.4vw,24px);line-height:1.45;margin:12px 0 18px}
+.question .gap{color:#8FA3B8;border-bottom:2px dashed #4A6585;font-weight:500}
+.question .v{color:var(--teal-soft)}
+.verb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;font-size:15px;color:#D5DEE8}
+.verb-row select{font:inherit;font-size:15px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;padding:6px 10px}
+.verb-row select option{color:var(--ink)}
+.progress{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.progress i{display:block;height:100%;width:0;background:var(--teal-soft);transition:width .3s}
+.result .actions{display:flex;gap:10px;flex-wrap:wrap}
+.result .btn-ghost{border-color:#fff;color:#fff}
+.result .btn-ghost:hover{background:#fff;color:var(--navy)}
+.design{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);color:#D5DEE8;font-size:15px}
+.design b{color:#fff}
+
+.finer{margin-top:26px;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.finer h2{font-size:20px;margin-bottom:4px}
+.finer p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.finer-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.finer label{display:flex;flex-direction:column;gap:4px;background:var(--mint);border-radius:10px;padding:14px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.finer label:has(input:checked){border-color:var(--teal);background:#fff}
+.finer input{accent-color:var(--teal);width:18px;height:18px}
+.finer b{font-family:Montserrat,sans-serif;color:var(--navy);font-size:15px}
+.finer span{font-size:13px;color:var(--muted);line-height:1.35}
+
+.cta{margin-top:26px;background:var(--mint);border-radius:18px;padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cta h2{font-size:21px;margin-bottom:4px}
+.cta p{margin:0;color:var(--muted)}
+.cta .btn{flex-shrink:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);opacity:0;background:var(--navy);color:#fff;padding:11px 18px;border-radius:999px;font-size:15px;transition:all .25s;pointer-events:none;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{padding:28px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ---- Print sheet (one A4 page) ---- */
+#sheet{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{font-size:11pt}
+  header,.hero,main,footer,.toast{display:none!important}
+  #sheet{display:block;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sh-head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:8px;margin-bottom:10px}
+  .sh-head .logo img{height:34px}
+  .sh-head .logo-text strong{font-size:13pt}
+  .sh-head .logo-text span{font-size:8pt}
+  .sh-title{text-align:right}
+  .sh-title h1{font-size:15pt}
+  .sh-title div{font-size:9pt;color:var(--muted)}
+  .sh-topic{font-size:10pt;margin:0 0 8px}
+  .sh-row{display:grid;grid-template-columns:16mm 1fr;gap:4mm;border:1px solid var(--line);border-radius:3mm;padding:3mm;margin-bottom:2.6mm;break-inside:avoid}
+  .sh-row .L{width:14mm;height:14mm;border-radius:3mm;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:700;font-size:16pt}
+  .sh-row h3{font-size:10.5pt}
+  .sh-row .hint{font-size:8.5pt;color:var(--muted)}
+  .sh-row .ans{font-size:11pt;margin-top:1mm;min-height:11mm;white-space:pre-wrap}
+  .sh-row .ans.blank{background:repeating-linear-gradient(transparent 0 6.2mm,var(--line) 6.2mm 6.5mm);min-height:13mm}
+  .sh-q{background:var(--navy);color:#fff;border-radius:3mm;padding:4mm 5mm;margin:3mm 0}
+  .sh-q small{color:var(--teal-soft);font-family:Montserrat,sans-serif;font-weight:600;letter-spacing:.15em;font-size:7.5pt}
+  .sh-q p{margin:1.5mm 0 0;font-family:Montserrat,sans-serif;font-weight:600;font-size:11.5pt;line-height:1.45}
+  .sh-q .blank{display:block;height:16mm;background:repeating-linear-gradient(transparent 0 6.6mm,rgba(255,255,255,.35) 6.6mm 6.9mm)}
+  .sh-finer{display:grid;grid-template-columns:repeat(5,1fr);gap:2mm;margin-top:1mm}
+  .sh-finer div{border:1px solid var(--line);border-radius:2mm;padding:2mm;font-size:8.5pt}
+  .sh-finer b{display:block;font-family:Montserrat,sans-serif;color:var(--navy);font-size:9pt}
+  .sh-foot{margin-top:3mm;padding-top:2mm;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:8.5pt;color:var(--muted)}
+}
+@media (max-width:760px){
+  .finer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cta{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .hero{padding:40px 0 46px}
+  .logo-text span{display:none}
+  .field{grid-template-columns:1fr;gap:10px;padding:16px}
+  .field .letter{width:48px;height:48px;font-size:22px;border-radius:12px}
+  .result{padding:22px}
+  .result .actions .btn{flex:1 1 100%}
+  .nav .btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Volver al inicio">
+      <img src="/plataforma/logo.png" alt="">
+      <span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA</span></span>
+    </a>
+    <a class="btn btn-ghost" href="/recursos/">Más recursos gratis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Planilla gratuita</span>
+    <h1>Armá tu pregunta de investigación con <em>PICO</em></h1>
+    <p>Completá cada parte y mirá cómo se arma tu pregunta en tiempo real. Al final podés descargarla en PDF para tu tesis o tu protocolo.</p>
+    <div class="pico-letters">
+      <span><b>P</b>Población</span><span><b id="hl-i">I</b><em id="hl-i-txt" style="font-style:normal">Intervención</em></span><span><b>C</b>Comparación</span><span><b>O</b>Resultado</span>
+    </div>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Tipo de pregunta">
+        <button type="button" data-type="pico" aria-pressed="true">Intervención (PICO)</button>
+        <button type="button" data-type="peco" aria-pressed="false">Exposición (PECO)</button>
+      </div>
+      <div class="tools">
+        <button type="button" class="btn btn-light" id="example">Ver un ejemplo</button>
+        <button type="button" class="btn btn-light" id="clear">Limpiar</button>
+      </div>
+    </div>
+    <p class="type-note" id="type-note">Usala si vas a evaluar un tratamiento, programa o intervención.</p>
+
+    <div class="fields">
+      <div class="field optional" data-k="tema">
+        <div class="letter">✎</div>
+        <div>
+          <label for="f-tema">Tema de tu trabajo <small>opcional</small></label>
+          <p class="help">En pocas palabras, ¿sobre qué querés investigar?</p>
+          <textarea id="f-tema" rows="1" placeholder="Ej.: control de la hipertensión en atención primaria"></textarea>
+        </div>
+      </div>
+      <div class="field" data-k="p">
+        <div class="letter">P</div>
+        <div>
+          <label for="f-p">Población</label>
+          <p class="help">¿En quiénes? Definí edad, condición, lugar y contexto.</p>
+          <textarea id="f-p" rows="2"></textarea>
+          <div class="ex"><b>Ejemplo:</b> <span data-ex="p"></span></div>
+        </div>
+      </div>
+      <div class="field" data-k="i">
+        <div class="letter" id="letter-i">I</div>
+        <div>
+          <label for="f-i" id="label-i">Intervención</label>
+          <p class="help" id="help-i">¿Qué aplicás o evaluás? Un tratamiento, programa, estrategia o prueba.</p>
+          <textarea id="f-i" rows="2"></textarea>
+          <div class="ex"><b>Ejemplo:</b> <span data-ex="i"></span></div>
+        </div>
+      </div>
+      <div class="field" data-k="c">
+        <div class="letter">C</div>
+        <div>
+          <label for="f-c">Comparación</label>
+          <p class="help" id="help-c">¿Contra qué lo comparás? Atención habitual, otro tratamiento, placebo o ninguno.</p>
+          <textarea id="f-c" rows="2"></textarea>
+          <div class="ex"><b>Ejemplo:</b> <span data-ex="c"></span></div>
+        </div>
+      </div>
+      <div class="field" data-k="o">
+        <div class="letter">O</div>
+        <div>
+          <label for="f-o">Resultado (Outcome)</label>
+          <p class="help">¿Qué vas a medir? Cuanto más concreto y medible, mejor.</p>
+          <textarea id="f-o" rows="2"></textarea>
+          <div class="ex"><b>Ejemplo:</b> <span data-ex="o"></span></div>
+        </div>
+      </div>
+      <div class="field optional" data-k="t">
+        <div class="letter">T</div>
+        <div>
+          <label for="f-t">Tiempo <small>opcional</small></label>
+          <p class="help">¿En qué período o con qué seguimiento?</p>
+          <textarea id="f-t" rows="1"></textarea>
+          <div class="ex"><b>Ejemplo:</b> <span data-ex="t"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="result" aria-live="polite">
+      <span class="eyebrow">Tu pregunta de investigación</span>
+      <p class="question" id="question"></p>
+      <div class="verb-row" id="verb-row">
+        <span>Verbo de la pregunta:</span>
+        <select id="verb">
+          <option>mejora</option><option>reduce</option><option>aumenta</option><option>modifica</option><option>previene</option>
+        </select>
+      </div>
+      <div class="progress"><i id="bar"></i></div>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="pdf">Descargar PDF</button>
+        <button type="button" class="btn btn-ghost" id="copy">Copiar pregunta</button>
+      </div>
+      <p class="design" id="design"></p>
+    </div>
+
+    <div class="finer">
+      <h2>¿Tu pregunta pasa el test FINER?</h2>
+      <p>Una buena pregunta no solo está bien escrita: también tiene que ser viable y valer la pena.</p>
+      <div class="finer-grid">
+        <label><input type="checkbox" data-f="F"><b>Factible</b><span>Tenés acceso a los participantes, el tiempo y los recursos.</span></label>
+        <label><input type="checkbox" data-f="I"><b>Interesante</b><span>Te motiva a vos y a tu comunidad científica.</span></label>
+        <label><input type="checkbox" data-f="N"><b>Novedosa</b><span>Aporta algo nuevo, confirma o amplía lo conocido.</span></label>
+        <label><input type="checkbox" data-f="E"><b>Ética</b><span>Puede aprobarla un comité de ética.</span></label>
+        <label><input type="checkbox" data-f="R"><b>Relevante</b><span>Sus resultados pueden cambiar la práctica o la gestión.</span></label>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h2>¿Querés que revise tu pregunta?</h2>
+        <p>Mandámela por WhatsApp y te digo cómo mejorarla para tu tesis o protocolo.</p>
+      </div>
+      <a class="btn btn-primary" id="wa" href="https://wa.me/5493515288994" target="_blank" rel="noopener">Enviar mi pregunta</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud</span>
+    <a href="https://www.instagram.com/julianrosonovich.epi/" target="_blank" rel="noopener">@julianrosonovich.epi</a>
+  </div>
+</footer>
+
+<!-- Printable one-page worksheet -->
+<div id="sheet" aria-hidden="true">
+  <div class="sh-head">
+    <div class="logo"><img src="/plataforma/logo.png" alt=""><span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA DE LA INVESTIGACIÓN</span></span></div>
+    <div class="sh-title"><h1 id="sh-h1">Planilla PICO</h1><div>Armá tu pregunta de investigación</div></div>
+  </div>
+  <p class="sh-topic" id="sh-topic"></p>
+  <div id="sh-rows"></div>
+  <div class="sh-q"><small>MI PREGUNTA DE INVESTIGACIÓN</small><p id="sh-q"></p></div>
+  <div class="sh-finer" id="sh-finer"></div>
+  <div class="sh-foot"><span>julianrosonovich-epi.vercel.app/pico</span><span>@julianrosonovich.epi · julianrosonovich.epi@gmail.com</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const TYPES = {
+    pico: {
+      note: 'Usala si vas a evaluar un tratamiento, programa o intervención.',
+      iLetter:'I', iLabel:'Intervención', iHelp:'¿Qué aplicás o evaluás? Un tratamiento, programa, estrategia o prueba.',
+      cHelp:'¿Contra qué lo comparás? Atención habitual, otro tratamiento, placebo o ninguno.',
+      ex:{ tema:'Control de la hipertensión en atención primaria',
+           p:'adultos de 40 a 65 años con hipertensión arterial atendidos en centros de salud de Córdoba',
+           i:'un programa de seguimiento telefónico mensual',
+           c:'la atención habitual',
+           o:'el control de la presión arterial (menor a 140/90 mmHg)',
+           t:'a los 6 meses' },
+      design:'<b>Diseños habituales para esta pregunta:</b> ensayo clínico aleatorizado o estudio cuasi-experimental.'
+    },
+    peco: {
+      note: 'Usala si querés estudiar un factor de riesgo o una exposición que no asignás vos (estudios observacionales).',
+      iLetter:'E', iLabel:'Exposición', iHelp:'¿Qué factor o exposición querés estudiar? Un hábito, un antecedente, una condición.',
+      cHelp:'¿Con quiénes los comparás? Generalmente, las personas no expuestas.',
+      ex:{ tema:'Tabaquismo e hipertensión en adultos',
+           p:'adultos de 40 a 65 años de un municipio de Córdoba',
+           i:'el tabaquismo',
+           c:'no fumar',
+           o:'una mayor prevalencia de hipertensión arterial',
+           t:'durante 2026' },
+      design:'<b>Diseños habituales para esta pregunta:</b> estudio de cohorte, de casos y controles o transversal analítico.'
+    }
+  };
+  const KEYS = ['tema','p','i','c','o','t'];
+  const LBL = {p:'población', i:'intervención', c:'comparación', o:'resultado'};
+  let type = 'pico';
+  const store = {
+    get(){ try { return JSON.parse(localStorage.getItem('pico-v1')||'null'); } catch(e){ return null; } },
+    set(v){ try { localStorage.setItem('pico-v1', JSON.stringify(v)); } catch(e){} }
+  };
+  const val = k => $('#f-'+k).value.trim().replace(/\s+/g,' ').replace(/[.?¿]+$/,'');
+  const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const lower1 = s => s ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+
+  function buildQuestion(html){
+    const v = {p:val('p'), i:val('i'), c:val('c'), o:val('o'), t:val('t')};
+    const part = (k, word) => v[k] ? (html ? '<span class="v">'+esc(lower1(v[k]))+'</span>' : lower1(v[k]))
+                                   : (html ? '<span class="gap">['+(word||LBL[k])+']</span>' : '…');
+    const verb = type === 'pico' ? $('#verb').value : 'se asocia con';
+    const iWord = type === 'pico' ? 'intervención' : 'exposición';
+    let q = 'En ' + part('p') + ', ¿' + part('i', iWord) + ', en comparación con ' + part('c') + ', ' + verb + ' ' + part('o');
+    if (v.t) q += ' ' + (html ? '<span class="v">'+esc(lower1(v.t))+'</span>' : lower1(v.t));
+    return q + '?';
+  }
+
+  function autosize(){ document.querySelectorAll('textarea').forEach(ta => { ta.style.height='auto'; ta.style.height = ta.scrollHeight + 2 + 'px'; }); }
+  function render(){
+    autosize();
+    const T = TYPES[type];
+    let filled = 0;
+    ['p','i','c','o'].forEach(k => { if (val(k)) filled++; });
+    document.querySelectorAll('.field').forEach(f => f.classList.toggle('done', !!val(f.dataset.k)));
+    $('#question').innerHTML = buildQuestion(true);
+    $('#bar').style.width = (filled/4*100) + '%';
+    $('#verb-row').style.display = type === 'pico' ? 'flex' : 'none';
+    $('#design').innerHTML = T.design + ' La elección final depende de tu pregunta, tus recursos y tu contexto.';
+    const msg = 'Hola Julián, completé la planilla PICO y quiero que revises mi pregunta de investigación:\n\n' + buildQuestion(false);
+    $('#wa').href = 'https://wa.me/5493515288994?text=' + encodeURIComponent(msg);
+    const data = {type, verb:$('#verb').value, finer:[...document.querySelectorAll('.finer input')].map(x=>x.checked)};
+    KEYS.forEach(k => data[k] = $('#f-'+k).value);
+    store.set(data);
+  }
+
+  function setType(t){
+    type = t;
+    const T = TYPES[t];
+    document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.type === t));
+    $('#type-note').textContent = T.note;
+    $('#letter-i').textContent = T.iLetter; $('#hl-i').textContent = T.iLetter; $('#hl-i-txt').textContent = T.iLabel;
+    $('#label-i').textContent = T.iLabel; $('#help-i').textContent = T.iHelp; $('#help-c').textContent = T.cHelp;
+    document.querySelectorAll('[data-ex]').forEach(s => s.textContent = T.ex[s.dataset.ex]);
+    document.querySelectorAll('textarea').forEach(ta => { const k = ta.id.slice(2); if (k !== 'tema') ta.placeholder = 'Ej.: ' + T.ex[k]; });
+    render();
+  }
+
+  function toast(m){ const el = $('#toast'); el.textContent = m; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('show'), 2200); }
+
+  function fillSheet(){
+    const T = TYPES[type];
+    $('#sh-h1').textContent = type === 'pico' ? 'Planilla PICO' : 'Planilla PECO';
+    const tema = val('tema');
+    $('#sh-topic').innerHTML = tema ? '<b>Tema:</b> ' + esc(tema) : '<b>Tema:</b> ______________________________________________';
+    const rows = [
+      ['P','Población','¿En quiénes? Edad, condición, lugar y contexto.','p'],
+      [T.iLetter,T.iLabel,T.iHelp,'i'],
+      ['C','Comparación',T.cHelp,'c'],
+      ['O','Resultado (Outcome)','¿Qué vas a medir? Concreto y medible.','o'],
+      ['T','Tiempo (opcional)','¿En qué período o con qué seguimiento?','t']
+    ];
+    $('#sh-rows').innerHTML = rows.map(r => {
+      const v = $('#f-'+r[3]).value.trim();
+      return '<div class="sh-row"><div class="L">'+r[0]+'</div><div><h3>'+r[1]+'</h3><div class="hint">'+esc(r[2])+'</div><div class="ans'+(v?'':' blank')+'">'+esc(v)+'</div></div></div>';
+    }).join('');
+    const any = ['p','i','c','o'].some(k => val(k));
+    $('#sh-q').innerHTML = any ? esc(buildQuestion(false)) : '<span class="blank"></span>';
+    const names = [['F','Factible'],['I','Interesante'],['N','Novedosa'],['E','Ética'],['R','Relevante']];
+    const checks = [...document.querySelectorAll('.finer input')].map(x=>x.checked);
+    $('#sh-finer').innerHTML = names.map((n,i) => '<div><b>'+(checks[i]?'☑':'☐')+' '+n[1]+'</b></div>').join('');
+  }
+
+  // events
+  document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => setType(b.dataset.type)));
+  document.querySelectorAll('textarea').forEach(ta => ta.addEventListener('input', render));
+  $('#verb').addEventListener('change', render);
+  document.querySelectorAll('.finer input').forEach(x => x.addEventListener('change', render));
+  $('#example').addEventListener('click', () => { const ex = TYPES[type].ex; KEYS.forEach(k => $('#f-'+k).value = ex[k]); if (type==='pico') $('#verb').value='mejora'; render(); toast('Cargamos un ejemplo. Reemplazalo con tu tema.'); });
+  $('#clear').addEventListener('click', () => { KEYS.forEach(k => $('#f-'+k).value=''); document.querySelectorAll('.finer input').forEach(x=>x.checked=false); render(); });
+  $('#copy').addEventListener('click', async () => {
+    const q = buildQuestion(false);
+    try { await navigator.clipboard.writeText(q); toast('Pregunta copiada'); }
+    catch(e){ const ta=document.createElement('textarea'); ta.value=q; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); toast('Pregunta copiada');}catch(_){} ta.remove(); }
+  });
+  $('#pdf').addEventListener('click', () => { fillSheet(); toast('Elegí "Guardar como PDF" en la ventana de impresión'); setTimeout(() => window.print(), 350); });
+  window.addEventListener('beforeprint', fillSheet);
+  $('#y').textContent = new Date().getFullYear();
+
+  // restore
+  const saved = store.get();
+  if (saved){
+    KEYS.forEach(k => { if (saved[k]) $('#f-'+k).value = saved[k]; });
+    if (saved.verb) $('#verb').value = saved.verb;
+    if (Array.isArray(saved.finer)) document.querySelectorAll('.finer input').forEach((x,i)=> x.checked = !!saved.finer[i]);
+    setType(saved.type === 'peco' ? 'peco' : 'pico');
+  } else setType('pico');
+})();
+</script>
+</body>
+</html>
