@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Planilla de demostración · Observatorio de Riesgo Cardiovascular · Julián Rosonovich</title>
+<meta name="description" content="Demostración interactiva del Observatorio de Riesgo Cardiovascular con datos ficticios: relevamiento, tablero de indicadores, base de datos y metodología.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+/* Layout: barra de marca + pestañas (Relevamiento · Tablero · Base · Metodología); contenido en una columna de 1120px. Marca Julián Rosonovich · Epidemiología */
+:root{
+  --navy:#0E2D51; --navy-2:#163E6B; --teal:#12888C; --teal-soft:#7FD3D3; --mint:#EEF6F6;
+  --ink:#1E2A36; --muted:#5A6B7B; --line:#C9D3DD; --bg:#FFFFFF; --surface:#F6F9FB; --card:#FFFFFF;
+  --head-bg:#0E2D51; --head-fg:#FFFFFF; --accent:#12888C; --accent-ink:#FFFFFF;
+  --ok:#2E7D4F; --warn:#B26A00; --crit:#B3261E; --ok-bg:#E6F3EA; --warn-bg:#FBF0DD; --crit-bg:#F9E3E1;
+  --bar:#12888C; --bar-2:#163E6B; --ref:#B26A00; --grid:#E3E9EF;
+  --f-display:Montserrat,system-ui,sans-serif; --f-body:'Source Sans 3',system-ui,sans-serif;
+  --radius:12px; --max:1120px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#E4ECF2; --muted:#9BAEBF; --line:#2B3E52; --bg:#0B1828; --surface:#0F2034; --card:#122640;
+  --head-bg:#081321; --head-fg:#E4ECF2; --accent:#3DB5B8; --accent-ink:#06202A; --mint:#11303A;
+  --ok:#6CC995; --warn:#E3A84A; --crit:#F08A80; --ok-bg:#12321F; --warn-bg:#352611; --crit-bg:#3A1714;
+  --bar:#3DB5B8; --bar-2:#7FA6D6; --ref:#E3A84A; --grid:#1F3349; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#E4ECF2; --muted:#9BAEBF; --line:#2B3E52; --bg:#0B1828; --surface:#0F2034; --card:#122640;
+  --head-bg:#081321; --head-fg:#E4ECF2; --accent:#3DB5B8; --accent-ink:#06202A; --mint:#11303A;
+  --ok:#6CC995; --warn:#E3A84A; --crit:#F08A80; --ok-bg:#12321F; --warn-bg:#352611; --crit-bg:#3A1714;
+  --bar:#3DB5B8; --bar-2:#7FA6D6; --ref:#E3A84A; --grid:#1F3349; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:16px}
+header.brand{background:var(--head-bg);color:var(--head-fg)}
+header.brand .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between;padding-block:14px}
+.logo{display:flex;gap:12px;align-items:center}
+.logo svg{flex:none}
+.logo b{font-family:var(--f-display);font-weight:700;font-size:17px;display:block}
+.logo small{font-family:var(--f-display);font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.75}
+.ctx{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.ctx label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;opacity:.8;font-family:var(--f-display)}
+.ctx select{font:inherit;font-size:15px;padding:6px 10px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:var(--head-fg)}
+.ctx select option{color:#1E2A36;background:#fff}
+.hero{background:var(--head-bg);color:var(--head-fg);border-top:1px solid rgba(255,255,255,.08)}
+.hero .wrap{padding-block:18px 0}
+.hero h1{font-size:clamp(22px,3.4vw,32px);font-weight:700}
+.hero h1 em{font-style:normal;color:var(--teal-soft)}
+.hero p{margin:6px 0 0;opacity:.85;max-width:70ch}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;margin-top:16px}
+nav.tabs button{font-family:var(--f-display);font-weight:600;font-size:14px;padding:12px 16px;border:0;background:transparent;color:var(--head-fg);opacity:.7;border-radius:10px 10px 0 0;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{background:var(--bg);color:var(--ink);opacity:1}
+nav.tabs button:focus-visible{outline:2px solid var(--teal-soft);outline-offset:-2px}
+main .wrap{padding-block:24px 48px}
+.notice{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-radius:10px;background:var(--mint);color:var(--ink);font-size:14px;margin-bottom:18px}
+.notice.warn{background:var(--warn-bg)}
+.notice b{font-family:var(--f-display);font-size:13px}
+.btn{font-family:var(--f-display);font-weight:600;font-size:14px;padding:10px 16px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:6px 10px;font-size:12.5px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* form */
+form{display:grid;gap:18px}
+fieldset{border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px 18px;margin:0;background:var(--card);min-width:0}
+legend{font-family:var(--f-display);font-weight:700;font-size:15px;padding:0 6px;color:var(--ink)}
+legend span{font-family:var(--f-body);font-weight:400;font-size:13px;color:var(--muted);margin-left:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px 16px}
+.f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.f label,.f .lbl{font-size:13px;color:var(--muted);font-weight:600}
+.f input,.f select{font:inherit;font-size:15px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);width:100%;font-variant-numeric:tabular-nums}
+.f .unit{font-size:12px;color:var(--muted)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:15px}
+.chk input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.live{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:4px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.pill.ok{background:var(--ok-bg);border-color:transparent;color:var(--ok)}
+.pill.warn{background:var(--warn-bg);border-color:transparent;color:var(--warn)}
+.pill.crit{background:var(--crit-bg);border-color:transparent;color:var(--crit)}
+.formbar{position:sticky;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.alertbox{border-radius:var(--radius);padding:14px 16px;border-left:5px solid var(--crit);background:var(--crit-bg)}
+.alertbox.warn{border-color:var(--warn);background:var(--warn-bg)}
+.alertbox.ok{border-color:var(--ok);background:var(--ok-bg)}
+.alertbox h4{font-size:14px;margin-bottom:4px}
+.alertbox ul{margin:4px 0 0;padding-left:18px}
+/* dashboard */
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{font:inherit;font-size:14px;padding:6px 12px;border:0;background:var(--card);color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.kpi .v{font-family:var(--f-display);font-weight:700;font-size:28px;font-variant-numeric:tabular-nums}
+.kpi .k{font-size:13px;color:var(--muted)}
+.kpi .s{font-size:12.5px;color:var(--muted);margin-top:2px}
+.panels{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:18px}
+@media (max-width:860px){.panels{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;min-width:0}
+.panel h3{font-size:16px;margin-bottom:2px}
+.panel .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.findings{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.findings li{padding:10px 12px;border-radius:10px;background:var(--surface);font-size:14.5px}
+.findings li b{font-family:var(--f-display);font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--grid);white-space:nowrap}
+th{font-family:var(--f-display);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--surface);position:sticky;top:0}
+td.num,th.num{text-align:right}
+.mt{margin-top:18px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+.muted{color:var(--muted)}
+.prose{max-width:72ch}
+.prose h2{font-size:22px;margin:28px 0 8px}
+.prose h3{font-size:16px;margin:20px 0 6px}
+.prose p,.prose li{font-size:15.5px}
+.deftbl td{white-space:normal;vertical-align:top}
+.deftbl td:first-child{font-weight:600;min-width:150px}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+footer .wrap{padding-block:18px;display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:20}
+.badge{font-family:var(--f-display);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:var(--warn-bg);color:var(--warn)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+.toplinks{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.toplinks a{font-family:var(--f-display);font-weight:600;font-size:13.5px;color:var(--head-fg);text-decoration:none;padding:8px 12px;border-radius:9px;border:1px solid rgba(255,255,255,.25)}
+.toplinks a.cta{background:var(--teal);border-color:var(--teal);color:#fff}
+.toplinks a:hover{background:rgba(255,255,255,.1)}.toplinks a.cta:hover{background:#0f7477}
+.logo{color:inherit;text-decoration:none}
+[hidden]{display:none!important}
+</style>
+</head><body>
+
+<header class="brand">
+  <div class="wrap">
+    <a class="logo" href="/" aria-label="Volver a la web">
+      <svg width="38" height="38" viewBox="0 0 38 38" aria-hidden="true"><rect width="38" height="38" rx="10" fill="#12888C"/><path d="M6 21h6l3-8 5 14 4-10 2 4h6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><b>Julián Rosonovich</b><small>Epidemiología · Metodología</small></div>
+    </a>
+    <select id="ctxMuni" hidden aria-hidden="true"></select>
+    <nav class="toplinks" aria-label="Sitio">
+      <a href="/">← Volver a la web</a>
+      <a class="cta" href="https://wa.me/5493515288994?text=Hola%20Juli%C3%A1n%2C%20vi%20la%20demostraci%C3%B3n%20del%20Observatorio%20y%20quiero%20m%C3%A1s%20informaci%C3%B3n" target="_blank" rel="noopener">Quiero implementarlo</a>
+    </nav>
+  </div>
+</header>
+<section class="hero">
+  <div class="wrap">
+    <h1>Observatorio de Riesgo Cardiovascular <em id="heroMuni">Municipio de ejemplo</em></h1>
+    <p><span class="badge" style="background:rgba(255,255,255,.14);color:#fff">Planilla de demostración</span></p>
+    <p>Relevamiento territorial de factores de riesgo cardiovascular en población adulta, con base de datos y tablero de indicadores para la gestión municipal.</p>
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="t-form" aria-selected="false" data-tab="form">Relevamiento</button>
+      <button role="tab" id="t-dash" aria-selected="true" data-tab="dash">Tablero</button>
+      <button role="tab" id="t-base" aria-selected="false" data-tab="base">Base de datos</button>
+      <button role="tab" id="t-met" aria-selected="false" data-tab="met">Metodología</button>
+    </nav>
+  </div>
+</section>
+
+<main>
+<div class="wrap">
+  <div id="demoNotice" class="notice warn"><div><b>Demostración con datos ficticios.</b> El tablero muestra 360 personas simuladas de un municipio imaginario. Podés cargar encuestas de prueba en «Relevamiento»: se suman al tablero solo en tu pantalla y no se guardan en ningún lado. <button class="btn sm ghost" id="demoToggle" type="button">Ver tablero vacío</button></div></div>
+
+  <!-- RELEVAMIENTO -->
+  <section id="p-form" role="tabpanel" hidden>
+    <form id="enc" novalidate>
+      <fieldset>
+        <legend>1. Identificación <span>sin nombre ni DNI: la encuesta es anónima</span></legend>
+        <div class="grid">
+          <div class="f"><label for="codigo">Código de encuesta</label><input id="codigo" readonly></div>
+          <div class="f"><label for="fecha">Fecha</label><input id="fecha" type="date" required></div>
+          <div class="f"><label for="municipio">Municipio</label><input id="municipio" list="dlMuni" required></div>
+          <div class="f"><label for="zona">Barrio / zona</label><input id="zona" list="dlZona" required placeholder="Ej.: Barrio, sección o radio censal"></div>
+          <div class="f"><label for="encuestador">Encuestador/a</label><input id="encuestador" required placeholder="Nombre o código"></div>
+        </div>
+        <label class="chk mt"><input type="checkbox" id="consent" required> <span>La persona leyó o escuchó la información del estudio y <b>dio su consentimiento verbal</b> para participar y para las mediciones.</span></label>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Datos sociodemográficos</legend>
+        <div class="grid">
+          <div class="f"><label for="sexo">Sexo registrado al nacer</label><select id="sexo" required><option value="">—</option><option value="F">Femenino</option><option value="M">Masculino</option></select></div>
+          <div class="f"><label for="edad">Edad</label><input id="edad" type="number" min="18" max="110" inputmode="numeric" required><span class="unit">años (18 o más)</span></div>
+          <div class="f"><label for="educacion">Máximo nivel educativo</label><select id="educacion"><option value="">—</option><option>Hasta primario incompleto</option><option>Primario completo</option><option>Secundario incompleto</option><option>Secundario completo</option><option>Terciario/universitario</option></select></div>
+          <div class="f"><label for="cobertura">Cobertura de salud</label><select id="cobertura"><option value="">—</option><option>Solo pública</option><option>Obra social / PAMI</option><option>Prepaga</option></select></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Tabaco, alcohol y alimentación <span>autorreporte · preguntas armonizadas con la ENFR</span></legend>
+        <div class="grid">
+          <div class="f"><label for="tabaco">¿Fuma cigarrillos actualmente?</label><select id="tabaco" required><option value="">—</option><option value="diario">Sí, todos los días</option><option value="ocasional">Sí, algunos días</option><option value="ex">Fumó, ya no fuma</option><option value="nunca">Nunca fumó</option></select></div>
+          <div class="f"><label for="cigDia">Cigarrillos por día</label><input id="cigDia" type="number" min="0" max="80" inputmode="numeric"></div>
+          <div class="f"><label for="fyv">Porciones de frutas y verduras por día</label><input id="fyv" type="number" min="0" max="15" step="0.5" inputmode="decimal" required><span class="unit">promedio de una semana típica</span></div>
+          <div class="f"><label for="sal">¿Agrega sal en la mesa o después de cocinar?</label><select id="sal"><option value="">—</option><option value="siempre">Siempre o casi siempre</option><option value="aveces">A veces</option><option value="nunca">Nunca</option></select></div>
+        </div>
+        <div class="grid mt">
+          <label class="chk"><input type="checkbox" id="humo"> <span>Expuesta/o a humo de tabaco ajeno en casa o trabajo</span></label>
+          <label class="chk"><input type="checkbox" id="alcohol"> <span>Consumo episódico excesivo en el último mes (5+ tragos varones, 4+ mujeres en una ocasión)</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Actividad física <span>última semana · IPAQ versión corta</span></legend>
+        <div class="grid">
+          <div class="f"><span class="lbl">Actividad intensa</span><div class="pair"><input id="vigD" type="number" min="0" max="7" placeholder="días" aria-label="Días de actividad intensa"><input id="vigM" type="number" min="0" max="600" placeholder="min/día" aria-label="Minutos por día de actividad intensa"></div><span class="unit">correr, cargar peso, fútbol</span></div>
+          <div class="f"><span class="lbl">Actividad moderada</span><div class="pair"><input id="modD" type="number" min="0" max="7" placeholder="días" aria-label="Días de actividad moderada"><input id="modM" type="number" min="0" max="600" placeholder="min/día" aria-label="Minutos por día de actividad moderada"></div><span class="unit">bici a ritmo suave, tareas pesadas de la casa</span></div>
+          <div class="f"><span class="lbl">Caminata</span><div class="pair"><input id="camD" type="number" min="0" max="7" placeholder="días" aria-label="Días de caminata"><input id="camM" type="number" min="0" max="600" placeholder="min/día" aria-label="Minutos por día de caminata"></div><span class="unit">al menos 10 minutos seguidos</span></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>5. Mediciones físicas <span>tensiómetro validado · balanza · cinta métrica · glucómetro</span></legend>
+        <div class="grid">
+          <div class="f"><label for="peso">Peso</label><input id="peso" type="number" step="0.1" min="30" max="250" inputmode="decimal" required><span class="unit">kg</span></div>
+          <div class="f"><label for="talla">Talla</label><input id="talla" type="number" step="0.5" min="120" max="210" inputmode="decimal" required><span class="unit">cm</span></div>
+          <div class="f"><label for="cintura">Circunferencia de cintura</label><input id="cintura" type="number" step="0.5" min="50" max="200" inputmode="decimal"><span class="unit">cm, a nivel umbilical</span></div>
+          <div class="f"><span class="lbl">Presión arterial · 1ª toma</span><div class="pair"><input id="pas1" type="number" min="70" max="260" placeholder="PAS" aria-label="Presión sistólica, primera toma" required><input id="pad1" type="number" min="40" max="160" placeholder="PAD" aria-label="Presión diastólica, primera toma" required></div><span class="unit">mmHg, sentado, tras 5 min de reposo</span></div>
+          <div class="f"><span class="lbl">Presión arterial · 2ª toma</span><div class="pair"><input id="pas2" type="number" min="70" max="260" placeholder="PAS" aria-label="Presión sistólica, segunda toma"><input id="pad2" type="number" min="40" max="160" placeholder="PAD" aria-label="Presión diastólica, segunda toma"></div><span class="unit">mmHg, 1–2 min después</span></div>
+          <div class="f"><label for="glucemia">Glucemia capilar</label><input id="glucemia" type="number" min="20" max="600" inputmode="numeric"><span class="unit">mg/dL</span></div>
+          <div class="f"><label for="ayunas">Condición de la glucemia</label><select id="ayunas"><option value="si">En ayunas (8 h o más)</option><option value="no">Sin ayuno</option></select></div>
+          <div class="f"><label for="colTotal">Colesterol total capilar (opcional)</label><input id="colTotal" type="number" min="60" max="500" inputmode="numeric"><span class="unit">mg/dL</span></div>
+        </div>
+        <div class="live" id="livePills"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>6. Antecedentes conocidos <span>"¿Algún médico o profesional de la salud le dijo que tiene…?"</span></legend>
+        <div class="grid">
+          <label class="chk"><input type="checkbox" id="htaDx"> <span>Presión alta</span></label>
+          <label class="chk"><input type="checkbox" id="htaTto"> <span>Toma medicación para la presión</span></label>
+          <label class="chk"><input type="checkbox" id="dbtDx"> <span>Diabetes o azúcar alta</span></label>
+          <label class="chk"><input type="checkbox" id="dbtTto"> <span>Toma medicación o insulina para la diabetes</span></label>
+          <label class="chk"><input type="checkbox" id="colDx"> <span>Colesterol alto</span></label>
+          <label class="chk"><input type="checkbox" id="evCV"> <span>Infarto, ACV o angina</span></label>
+        </div>
+      </fieldset>
+
+      <div id="resultBox" hidden></div>
+
+      <div class="formbar">
+        <span class="muted" id="formMsg">Los campos de presión, peso, talla y hábitos son obligatorios.</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn ghost" id="btnReset">Nueva encuesta</button>
+          <button type="submit" class="btn" id="btnSave">Guardar encuesta</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <!-- TABLERO -->
+  <section id="p-dash" role="tabpanel">
+    <div class="filters">
+      <div class="seg" role="group" aria-label="Sexo">
+        <button type="button" data-sexo="" aria-pressed="true">Todos</button><button type="button" data-sexo="F" aria-pressed="false">Mujeres</button><button type="button" data-sexo="M" aria-pressed="false">Varones</button>
+      </div>
+      <div class="f" style="flex-direction:row;align-items:center;gap:8px"><label for="fZona" style="margin:0">Zona</label><select id="fZona" style="width:auto"></select></div>
+      <div class="f" style="flex-direction:row;align-items:center;gap:8px"><label for="fEdad" style="margin:0">Edad</label><select id="fEdad" style="width:auto"><option value="">Todas</option><option value="18-34">18–34</option><option value="35-49">35–49</option><option value="50-64">50–64</option><option value="65+">65 y más</option></select></div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="panels">
+      <div class="panel">
+        <h3>Prevalencia de factores de riesgo</h3>
+        <p class="sub">% de personas de 18 años y más · barra fina = IC 95% · marca naranja = referencia nacional ENFR 2018 (autorreporte)</p>
+        <div class="chart" id="chPrev"></div>
+        <div class="legend"><span><i style="background:var(--bar)"></i>Medido</span><span><i style="background:var(--bar-2)"></i>Autorreportado</span><span><i style="background:var(--ref)"></i>ENFR 2018, total país</span></div>
+      </div>
+      <div class="panel">
+        <h3>Hallazgos para la gestión</h3>
+        <p class="sub">Se recalculan con cada encuesta</p>
+        <ul class="findings" id="findings"></ul>
+      </div>
+    </div>
+    <div class="panels mt">
+      <div class="panel">
+        <h3>Hipertensión, obesidad y glucemia elevada por grupo de edad</h3>
+        <p class="sub">% dentro de cada grupo</p>
+        <div class="chart" id="chEdad"></div>
+        <div class="legend"><span><i style="background:var(--bar)"></i>Hipertensión</span><span><i style="background:var(--bar-2)"></i>Obesidad</span><span><i style="background:var(--ref)"></i>Glucemia elevada / DBT</span></div>
+      </div>
+      <div class="panel">
+        <h3>Factores de riesgo acumulados</h3>
+        <p class="sub">Tabaco, HTA, glucemia elevada, obesidad, actividad física baja, colesterol elevado</p>
+        <div class="chart" id="chAcum"></div>
+      </div>
+    </div>
+    <div class="panel mt">
+      <h3>Comparación por zona</h3>
+      <p class="sub">Para priorizar operativos territoriales. Con menos de 30 encuestas por zona, interpretar con cautela.</p>
+      <div class="tbl"><table id="tZona"></table></div>
+    </div>
+  </section>
+
+  <!-- BASE -->
+  <section id="p-base" role="tabpanel" hidden>
+    <div class="row">
+      <div><h3 style="font-size:18px">Encuestas registradas</h3><span class="muted" id="baseCount"></span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn ghost" id="btnCopy" type="button">Copiar CSV</button>
+        <button class="btn" id="btnCsv" type="button">Descargar CSV</button>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:0">Una fila por persona, con las variables originales y las derivadas (IMC, PA promedio, MET-min/semana, factores acumulados). El CSV abre en Excel, SPSS, R o Jamovi.</p>
+    <div class="tbl" style="max-height:560px"><table id="tBase"></table></div>
+  </section>
+
+  <!-- METODOLOGIA -->
+  <section id="p-met" role="tabpanel" hidden>
+    <div class="prose">
+      <h2>Cómo funciona el sistema</h2>
+      <p>Equipos de promotores y agentes sanitarios recorren el municipio con un celular o tablet, aplican una encuesta breve de unos 15 minutos y toman mediciones físicas. Cada encuesta se guarda en una base centralizada y el tablero se actualiza en el momento, separado por zona, sexo y edad.</p>
+      <p>El instrumento sigue el método STEPS de la OMS (cuestionario, mediciones físicas y bioquímicas) y usa preguntas armonizadas con la Encuesta Nacional de Factores de Riesgo (ENFR). Eso permite comparar al municipio con la provincia y el país, y repetir el relevamiento para ver tendencias.</p>
+      <h3>Etapas de implementación</h3>
+      <ol>
+        <li><b>Diagnóstico y diseño muestral.</b> Definición de zonas, tamaño de muestra por zona y estrategia de selección de hogares.</li>
+        <li><b>Capacitación del equipo de campo.</b> Entrevista, toma estandarizada de presión, antropometría y glucemia capilar; consentimiento y circuito de derivación.</li>
+        <li><b>Relevamiento.</b> Carga directa en esta aplicación, con alertas de derivación en el momento.</li>
+        <li><b>Análisis e informe.</b> Prevalencias con intervalos de confianza, comparación con la ENFR, priorización por zona y recomendaciones.</li>
+        <li><b>Seguimiento.</b> Repetición anual o bianual para evaluar el impacto de las intervenciones.</li>
+      </ol>
+      <h3>Tamaño de muestra orientativo</h3>
+      <p>Para estimar una prevalencia del 35% (orden de la hipertensión en adultos) con un error de ±5 puntos y 95% de confianza hacen falta unas <b>350 personas</b>; con efecto de diseño 1,5 por muestreo por conglomerados, unas <b>525</b>. Para comparar zonas entre sí se recomiendan al menos 100 personas por zona.</p>
+    </div>
+    <h2 style="font-size:22px;margin:28px 0 10px">Definiciones operativas</h2>
+    <div class="tbl"><table class="deftbl">
+      <thead><tr><th>Indicador</th><th>Definición</th><th>Fuente</th></tr></thead>
+      <tbody>
+        <tr><td>Hipertensión arterial</td><td>Promedio de 2 tomas con PAS ≥ 140 o PAD ≥ 90 mmHg, o tratamiento antihipertensivo actual.</td><td>Medido</td></tr>
+        <tr><td>HTA no diagnosticada</td><td>PA elevada en la medición sin diagnóstico previo referido.</td><td>Medido + autorreporte</td></tr>
+        <tr><td>Glucemia elevada / diabetes</td><td>Glucemia capilar ≥ 126 mg/dL en ayunas o ≥ 200 sin ayuno, o diagnóstico/tratamiento de diabetes referido.</td><td>Medido + autorreporte</td></tr>
+        <tr><td>Obesidad / sobrepeso</td><td>IMC ≥ 30 / IMC 25 a 29,9 kg/m².</td><td>Medido</td></tr>
+        <tr><td>Obesidad abdominal</td><td>Cintura &gt; 88 cm en mujeres o &gt; 102 cm en varones.</td><td>Medido</td></tr>
+        <tr><td>Tabaquismo actual</td><td>Fuma cigarrillos todos los días o algunos días.</td><td>Autorreporte</td></tr>
+        <tr><td>Actividad física baja</td><td>Menos de 600 MET-min/semana (IPAQ: intensa × 8, moderada × 4, caminata × 3,3).</td><td>Autorreporte</td></tr>
+        <tr><td>Consumo insuficiente de frutas y verduras</td><td>Menos de 5 porciones diarias.</td><td>Autorreporte</td></tr>
+        <tr><td>Colesterol elevado</td><td>Colesterol total ≥ 240 mg/dL o diagnóstico referido.</td><td>Medido + autorreporte</td></tr>
+        <tr><td>Factores acumulados</td><td>Suma de tabaco, HTA, glucemia elevada, obesidad, actividad física baja y colesterol elevado. Se informa el % con 3 o más.</td><td>Derivado</td></tr>
+      </tbody>
+    </table></div>
+    <div class="prose">
+      <h3>Criterios de derivación en terreno</h3>
+      <p>La aplicación avisa al encuestador cuando corresponde derivar: PA ≥ 180/110 mmHg o glucemia ≥ 250 mg/dL, derivación el mismo día; PA elevada sin diagnóstico o glucemia elevada, turno en el centro de salud. Los umbrales se ajustan al protocolo local de atención primaria.</p>
+      <h3>Protección de datos</h3>
+      <p>La base no guarda nombre, DNI ni domicilio: cada persona se identifica con un código. Los datos de salud son datos sensibles (Ley 25.326), por lo que se requiere consentimiento informado y el municipio es titular de la base. Para la puesta en producción se recomienda aprobación de un comité de ética si los resultados se van a publicar.</p>
+      <h3>Referencias</h3>
+      <p class="muted" style="font-size:14px">Ministerio de Salud de la Nación – INDEC. 4ª Encuesta Nacional de Factores de Riesgo, 2018. OMS. Manual STEPS de vigilancia de factores de riesgo de ENT. IPAQ Research Committee. Guías de procesamiento del IPAQ.</p>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer><div class="wrap"><span>© Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud · Córdoba</span><span><a href="https://wa.me/5493515288994" style="color:inherit">WhatsApp 351 528-8994</a> · <a href="mailto:julianrosonovich.epi@gmail.com" style="color:inherit">julianrosonovich.epi@gmail.com</a></span></div></footer>
+<div class="toast" id="toast" hidden></div>
+<datalist id="dlMuni"></datalist><datalist id="dlZona"></datalist>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const DEFAULT_MUNI='Municipio de ejemplo';
+const ENFR={tab:22.2,glu:12.7,obe:25.3,fyv:94.0,sal:16.4,col:28.9,alc:13.3};
+let real=[], dbRef=null, userNS=null, canDelete=false, showDemo=true, connected=false;
+let ctxMuni=DEFAULT_MUNI;
+const filt={sexo:'',zona:'',edad:''};
+
+/* ---------- utilidades ---------- */
+const num=v=>{if(v===''||v==null)return null;const n=Number(v);return isFinite(n)?n:null};
+const pct=(a,b)=>b?100*a/b:null;
+const f1=v=>v==null?'—':v.toLocaleString('es-AR',{maximumFractionDigits:1,minimumFractionDigits:1});
+function wilson(x,n){if(!n)return[null,null];const z=1.96,p=x/n,d=1+z*z/n,c=p+z*z/(2*n),m=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return[100*(c-m)/d,100*(c+m)/d]}
+function toast(t){const el=$('#toast');el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,2800)}
+function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function grupoEdad(e){return e<35?'18-34':e<50?'35-49':e<65?'50-64':'65+'}
+
+/* ---------- variables derivadas ---------- */
+function deriv(r){
+  const d={};
+  const pas=[r.pas1,r.pas2].filter(v=>v!=null), pad=[r.pad1,r.pad2].filter(v=>v!=null);
+  d.pas=pas.length?pas.reduce((a,b)=>a+b)/pas.length:null; d.pad=pad.length?pad.reduce((a,b)=>a+b)/pad.length:null;
+  d.paElev=d.pas!=null&&(d.pas>=140||d.pad>=90);
+  d.hta=d.paElev||!!r.htaTto;
+  d.htaNoDx=d.paElev&&!r.htaDx;
+  d.imc=(r.peso&&r.talla)?r.peso/Math.pow(r.talla/100,2):null;
+  d.obe=d.imc!=null&&d.imc>=30; d.sobre=d.imc!=null&&d.imc>=25&&d.imc<30;
+  d.cintR=r.cintura!=null?(r.sexo==='F'?r.cintura>88:r.cintura>102):null;
+  const met=8*(r.vigD||0)*(r.vigM||0)+4*(r.modD||0)*(r.modM||0)+3.3*(r.camD||0)*(r.camM||0);
+  d.met=Math.round(met); d.afBaja=met<600;
+  d.glucMed=r.glucemia!=null&&(r.ayunas==='si'?r.glucemia>=126:r.glucemia>=200);
+  d.glu=d.glucMed||!!r.dbtDx||!!r.dbtTto;
+  d.tab=r.tabaco==='diario'||r.tabaco==='ocasional';
+  d.fyvIns=r.fyv!=null&&r.fyv<5;
+  d.sal=r.sal==='siempre';
+  d.col=(r.colTotal!=null&&r.colTotal>=240)||!!r.colDx;
+  d.nfr=[d.tab,d.hta,d.glu,d.obe,d.afBaja,d.col].filter(Boolean).length;
+  d.grupo=grupoEdad(r.edad||18);
+  return d;
+}
+function derivacion(r,d){
+  const out=[];
+  if(d.pas!=null&&(d.pas>=180||d.pad>=110)) out.push(['crit',`PA ${Math.round(d.pas)}/${Math.round(d.pad)} mmHg: derivar hoy a guardia o centro de salud.`]);
+  else if(d.paElev&&!r.htaDx) out.push(['warn',`PA ${Math.round(d.pas)}/${Math.round(d.pad)} mmHg sin diagnóstico previo: turno en el centro de salud.`]);
+  else if(d.paElev&&r.htaDx) out.push(['warn','Hipertensión conocida no controlada: control con su médico.']);
+  if(r.glucemia!=null){
+    if(r.glucemia>=250) out.push(['crit',`Glucemia ${r.glucemia} mg/dL: derivar hoy.`]);
+    else if(r.glucemia<70) out.push(['crit',`Glucemia ${r.glucemia} mg/dL (baja): ofrecer azúcar y evaluar.`]);
+    else if(d.glucMed&&!r.dbtDx) out.push(['warn',`Glucemia ${r.glucemia} mg/dL sin diagnóstico previo: turno para estudio.`]);
+  }
+  if(r.colTotal!=null&&r.colTotal>=240&&!r.colDx) out.push(['warn',`Colesterol ${r.colTotal} mg/dL: turno para perfil lipídico.`]);
+  if(d.nfr>=3) out.push(['warn',`${d.nfr} factores de riesgo acumulados: consejería y control en atención primaria.`]);
+  return out;
+}
+
+/* ---------- datos de ejemplo (no se guardan) ---------- */
+function demoData(){
+  let s=20261012; const rnd=()=>{s=(s*1664525+1013904223)%4294967296;return s/4294967296};
+  const nrm=(m,sd)=>{let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return m+sd*Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+  const zonas=['Zona A (ejemplo)','Zona B (ejemplo)','Zona C (ejemplo)','Zona D (ejemplo)'];
+  const out=[];
+  for(let i=0;i<360;i++){
+    const zi=Math.floor(rnd()*4), sexo=rnd()<.53?'F':'M', edad=Math.min(90,Math.max(18,Math.round(nrm(44,16))));
+    const zb=[0,.04,.08,-.03][zi], ab=(edad-44)/16;
+    const peso=Math.max(42,nrm(sexo==='F'?72:82,15)+zi*1.5), talla=Math.max(140,nrm(sexo==='F'?159:172,7));
+    const pas=Math.max(90,nrm(124+ab*10+(sexo==='M'?5:0)+zb*60,17)), pad=Math.max(55,nrm(79+ab*3+zb*20,11));
+    const htaDx=pas>=140?rnd()<.55:rnd()<.08, htaTto=htaDx&&rnd()<.7;
+    const ay=rnd()<.6, gl=Math.max(70,nrm(ay?98+ab*8:118+ab*10,ay?22:30)+zb*40);
+    const r={codigo:'DEMO-'+(1000+i),fecha:'2026-09-'+String(1+Math.floor(rnd()*28)).padStart(2,'0'),municipio:DEFAULT_MUNI,zona:zonas[zi],encuestador:'Ejemplo',sexo,edad,
+      educacion:['Primario completo','Secundario incompleto','Secundario completo','Terciario/universitario'][Math.floor(rnd()*4)],cobertura:rnd()<.45?'Solo pública':'Obra social / PAMI',
+      tabaco:rnd()<.24+zb?(rnd()<.8?'diario':'ocasional'):(rnd()<.3?'ex':'nunca'),fyv:Math.max(0,Math.round(nrm(2.2,1.3)*2)/2),sal:rnd()<.18?'siempre':rnd()<.5?'aveces':'nunca',
+      humo:rnd()<.25,alcohol:rnd()<(sexo==='M'?.2:.08),
+      vigD:rnd()<.25?Math.ceil(rnd()*4):0,vigM:30,modD:rnd()<.35?Math.ceil(rnd()*4):0,modM:30,camD:Math.floor(rnd()*7),camM:Math.round(10+rnd()*30),
+      peso:Math.round(peso*10)/10,talla:Math.round(talla),cintura:Math.round(nrm(sexo==='F'?90:97,13)),
+      pas1:Math.round(pas+nrm(2,4)),pad1:Math.round(pad+nrm(1,3)),pas2:Math.round(pas),pad2:Math.round(pad),
+      glucemia:Math.round(gl),ayunas:ay?'si':'no',colTotal:rnd()<.5?Math.round(nrm(195,38)):null,
+      htaDx,htaTto,dbtDx:gl>=(ay?126:200)?rnd()<.5:rnd()<.04,dbtTto:false,colDx:rnd()<.2,evCV:edad>55&&rnd()<.08,demo:true};
+    r.dbtTto=r.dbtDx&&rnd()<.6;
+    out.push(r);
+  }
+  return out;
+}
+const DEMO=demoData();
+
+/* ---------- conjunto activo ---------- */
+function dataset(){
+  const base=real.length?real:(showDemo?DEMO:[]);
+  return base.filter(r=>(r.municipio||'')===ctxMuni||(!real.length&&showDemo));
+}
+function filtered(){
+  return dataset().filter(r=>(!filt.sexo||r.sexo===filt.sexo)&&(!filt.zona||r.zona===filt.zona)&&(!filt.edad||grupoEdad(r.edad)===filt.edad));
+}
+
+/* ---------- municipios y zonas ---------- */
+function municipios(){const s=new Set([DEFAULT_MUNI]);real.forEach(r=>r.municipio&&s.add(r.municipio));return[...s].sort()}
+function renderCtx(){
+  const sel=$('#ctxMuni'), ms=municipios();
+  if(!ms.includes(ctxMuni)) ctxMuni=ms[0];
+  sel.innerHTML=ms.map(m=>`<option ${m===ctxMuni?'selected':''}>${esc(m)}</option>`).join('');
+  $('#dlMuni').innerHTML=ms.map(m=>`<option value="${esc(m)}">`).join('');
+  $('#heroMuni').textContent=ctxMuni;
+  const zs=[...new Set(dataset().map(r=>r.zona).filter(Boolean))].sort();
+  $('#dlZona').innerHTML=zs.filter(z=>!/ejemplo/.test(z)).map(z=>`<option value="${esc(z)}">`).join('');
+  const fz=$('#fZona'); if(filt.zona&&!zs.includes(filt.zona)) filt.zona='';
+  fz.innerHTML='<option value="">Todas</option>'+zs.map(z=>`<option ${z===filt.zona?'selected':''}>${esc(z)}</option>`).join('');
+  const usingDemo=!real.length&&showDemo; $('#demoNotice').hidden=false;
+  $('#demoToggle').textContent=showDemo?'Ver tablero vacío':'Mostrar datos de ejemplo';
+  document.title; return usingDemo;
+}
+
+/* ---------- gráficos SVG ---------- */
+function svgEl(w,h,inner){return `<svg viewBox="0 0 ${w} ${h}" role="img" font-family="Source Sans 3, system-ui, sans-serif">${inner}</svg>`}
+function chartPrev(rows){
+  const n=rows.length, ds=rows.map(deriv);
+  const items=[
+    ['Hipertensión arterial','hta','m',null],
+    ['Actividad física baja','afBaja','a',null],
+    ['Obesidad (IMC ≥ 30)','obe','m',ENFR.obe],
+    ['Obesidad abdominal','cintR','m',null],
+    ['Colesterol elevado','col','x',ENFR.col],
+    ['Tabaquismo actual','tab','a',ENFR.tab],
+    ['Glucemia elevada / DBT','glu','x',ENFR.glu],
+    ['Menos de 5 porciones FyV','fyvIns','a',ENFR.fyv],
+    ['Sal en la mesa','sal','a',ENFR.sal]
+  ].map(([l,k,t,ref])=>{const valid=ds.filter(d=>d[k]!=null);const x=valid.filter(d=>d[k]).length;const p=pct(x,valid.length);const ci=wilson(x,valid.length);return{l,p,ci,t,ref,n:valid.length}});
+  const W=640,L=180,R=56,rowH=34,T=22,H=T+items.length*rowH+8, sx=v=>L+(W-L-R)*v/100;
+  let g='';
+  [0,25,50,75,100].forEach(t=>{g+=`<line x1="${sx(t)}" x2="${sx(t)}" y1="${T-6}" y2="${H-6}" stroke="var(--grid)"/><text x="${sx(t)}" y="${T-10}" font-size="11" text-anchor="middle" fill="var(--muted)">${t}%</text>`});
+  items.forEach((it,i)=>{const y=T+i*rowH;const col=it.t==='a'?'var(--bar-2)':'var(--bar)';
+    g+=`<text x="${L-10}" y="${y+18}" font-size="13" text-anchor="end" fill="var(--ink)">${esc(it.l)}</text>`;
+    if(it.p!=null){g+=`<rect x="${L}" y="${y+7}" width="${Math.max(1,sx(it.p)-L)}" height="16" rx="3" fill="${col}"/>`;
+      g+=`<line x1="${sx(it.ci[0])}" x2="${sx(it.ci[1])}" y1="${y+15}" y2="${y+15}" stroke="var(--ink)" stroke-width="1.4" opacity=".55"/>`;
+      g+=`<text x="${Math.min(W-4,sx(it.ci[1])+6)}" y="${y+19}" font-size="12.5" fill="var(--ink)" font-weight="600" ${sx(it.ci[1])+6>W-R+40?'text-anchor="end"':''}>${f1(it.p)}%</text>`;}
+    else g+=`<text x="${L+4}" y="${y+19}" font-size="12" fill="var(--muted)">sin datos</text>`;
+    if(it.ref!=null) g+=`<rect x="${sx(it.ref)-1.5}" y="${y+3}" width="3" height="24" rx="1" fill="var(--ref)"><title>ENFR 2018: ${f1(it.ref)}%</title></rect>`;
+  });
+  return svgEl(W,H,g);
+}
+function chartEdad(rows){
+  const gs=['18-34','35-49','50-64','65+'], keys=[['hta','var(--bar)'],['obe','var(--bar-2)'],['glu','var(--ref)']];
+  const W=520,H=230,L=36,B=34,T=14, cw=(W-L-8)/gs.length, bw=18, sy=v=>T+(H-T-B)*(1-v/100);
+  let g='';
+  [0,25,50,75].forEach(t=>{g+=`<line x1="${L}" x2="${W-4}" y1="${sy(t)}" y2="${sy(t)}" stroke="var(--grid)"/><text x="${L-6}" y="${sy(t)+4}" font-size="11" text-anchor="end" fill="var(--muted)">${t}</text>`});
+  gs.forEach((gr,i)=>{const sub=rows.filter(r=>grupoEdad(r.edad)===gr).map(deriv);const cx=L+cw*i+cw/2;
+    keys.forEach(([k,c],j)=>{const p=sub.length?pct(sub.filter(d=>d[k]).length,sub.length):0;const x=cx+(j-1)*(bw+4)-bw/2;
+      g+=`<rect x="${x}" y="${sy(p)}" width="${bw}" height="${Math.max(0,sy(0)-sy(p))}" rx="3" fill="${c}"><title>${gr}: ${f1(p)}%</title></rect>`;
+      if(sub.length) g+=`<text x="${x+bw/2}" y="${sy(p)-4}" font-size="10.5" text-anchor="middle" fill="var(--ink)">${Math.round(p)}</text>`;});
+    g+=`<text x="${cx}" y="${H-14}" font-size="12.5" text-anchor="middle" fill="var(--ink)">${gr==='65+'?'65 y más':gr.replace('-','–')}</text><text x="${cx}" y="${H-1}" font-size="11" text-anchor="middle" fill="var(--muted)">n=${sub.length}</text>`;});
+  return svgEl(W,H,g);
+}
+function chartAcum(rows){
+  const ds=rows.map(deriv), cats=['0','1','2','3','4+'], cnt=[0,0,0,0,0];
+  ds.forEach(d=>cnt[Math.min(4,d.nfr)]++); const n=ds.length||1, ps=cnt.map(c=>100*c/n), mx=Math.max(50,...ps);
+  const W=420,H=210,L=12,B=40,T=18,cw=(W-2*L)/5, sy=v=>T+(H-T-B)*(1-v/mx);
+  let g='';
+  ps.forEach((p,i)=>{const x=L+cw*i+10, w=cw-20, c=i>=3?'var(--crit)':'var(--bar)';
+    g+=`<rect x="${x}" y="${sy(p)}" width="${w}" height="${Math.max(0,sy(0)-sy(p))}" rx="4" fill="${c}" opacity="${i>=3?.85:1}"/>`;
+    g+=`<text x="${x+w/2}" y="${sy(p)-5}" font-size="12.5" font-weight="600" text-anchor="middle" fill="var(--ink)">${f1(p)}%</text>`;
+    g+=`<text x="${x+w/2}" y="${H-22}" font-size="13" text-anchor="middle" fill="var(--ink)">${cats[i]}</text>`;});
+  g+=`<text x="${W/2}" y="${H-4}" font-size="11.5" text-anchor="middle" fill="var(--muted)">cantidad de factores de riesgo por persona</text>`;
+  return svgEl(W,H,g);
+}
+
+/* ---------- tablero ---------- */
+function renderDash(){
+  const rows=filtered(), ds=rows.map(deriv), n=rows.length;
+  const k=(label,v,s)=>`<div class="kpi"><div class="k">${label}</div><div class="v">${v}</div><div class="s">${s||''}</div></div>`;
+  const cnt=f=>ds.filter(f).length;
+  const hta=cnt(d=>d.hta), paE=cnt(d=>d.paElev), noDx=cnt(d=>d.htaNoDx), fr3=cnt(d=>d.nfr>=3);
+  const deriv_=rows.filter((r,i)=>derivacion(r,ds[i]).some(x=>x[0]==='crit')).length;
+  $('#kpis').innerHTML=n?[
+    k('Personas encuestadas',n.toLocaleString('es-AR'),`${new Set(rows.map(r=>r.zona)).size} zonas · ${new Set(rows.map(r=>r.encuestador)).size} encuestadores`),
+    k('Hipertensión arterial',f1(pct(hta,n))+'%',`IC 95% ${wilson(hta,n).map(v=>f1(v)).join('–')}`),
+    k('PA elevada sin diagnóstico',f1(pct(noDx,paE))+'%','de quienes tuvieron PA elevada'),
+    k('3 o más factores de riesgo',f1(pct(fr3,n))+'%',`${fr3} personas`),
+    k('Derivaciones urgentes',deriv_,'PA ≥ 180/110 o glucemia ≥ 250 / &lt; 70')
+  ].join(''):`<div class="kpi" style="grid-column:1/-1"><div class="k">Sin encuestas para este filtro</div><div class="s">Cargá la primera encuesta en la pestaña Relevamiento o cambiá los filtros.</div></div>`;
+  $('#chPrev').innerHTML=n?chartPrev(rows):'';
+  $('#chEdad').innerHTML=n?chartEdad(rows):'';
+  $('#chAcum').innerHTML=n?chartAcum(rows):'';
+  // hallazgos
+  const F=[];
+  if(n){
+    const gluX=cnt(d=>d.glucMed), gluNoDx=rows.filter((r,i)=>ds[i].glucMed&&!r.dbtDx).length;
+    if(paE) F.push(`<b>${f1(pct(noDx,paE))}%</b> de las personas con presión elevada no sabía que la tenía. Es el hallazgo más accionable: detección y captación en los centros de salud.`);
+    const htaTx=rows.filter((r,i)=>r.htaTto).length, htaTxNo=rows.filter((r,i)=>r.htaTto&&ds[i].paElev).length;
+    if(htaTx>=5) F.push(`De quienes toman medicación para la presión, <b>${f1(pct(htaTxNo,htaTx))}%</b> tenía valores no controlados.`);
+    if(gluX) F.push(`<b>${f1(pct(gluNoDx,gluX))}%</b> de las glucemias elevadas correspondió a personas sin diagnóstico de diabetes.`);
+    F.push(`<b>${f1(pct(cnt(d=>d.fyvIns),n))}%</b> come menos de 5 porciones de frutas y verduras por día y <b>${f1(pct(cnt(d=>d.afBaja),n))}%</b> tiene actividad física baja.`);
+    const byZ={};rows.forEach((r,i)=>{(byZ[r.zona]=byZ[r.zona]||[]).push(ds[i])});
+    const zs=Object.entries(byZ).filter(([z,a])=>a.length>=20).map(([z,a])=>[z,pct(a.filter(d=>d.nfr>=3).length,a.length)]).sort((a,b)=>b[1]-a[1]);
+    if(zs.length>1) F.push(`La zona con más personas con 3 o más factores es <b>${esc(zs[0][0])}</b> (${f1(zs[0][1])}%), frente a ${f1(zs[zs.length-1][1])}% en ${esc(zs[zs.length-1][0])}.`);
+  }
+  $('#findings').innerHTML=F.map(x=>`<li>${x}</li>`).join('')||'<li class="muted">Los hallazgos aparecen con las primeras encuestas.</li>';
+  // por zona
+  const byZ={};rows.forEach((r,i)=>{(byZ[r.zona||'Sin zona']=byZ[r.zona||'Sin zona']||[]).push(ds[i])});
+  const keys=[['hta','HTA'],['glu','Gluc. elevada'],['obe','Obesidad'],['tab','Tabaco'],['afBaja','AF baja']];
+  const hdr=`<thead><tr><th>Zona</th><th class="num">n</th>${keys.map(k=>`<th class="num">${k[1]} %</th>`).join('')}<th class="num">3+ FR %</th></tr></thead>`;
+  const body=Object.entries(byZ).sort().map(([z,a])=>`<tr><td>${esc(z)}</td><td class="num">${a.length}</td>${keys.map(([kk])=>`<td class="num">${f1(pct(a.filter(d=>d[kk]).length,a.length))}</td>`).join('')}<td class="num"><span class="pill ${pct(a.filter(d=>d.nfr>=3).length,a.length)>=30?'crit':'ok'}">${f1(pct(a.filter(d=>d.nfr>=3).length,a.length))}</span></td></tr>`).join('');
+  $('#tZona').innerHTML=hdr+'<tbody>'+(body||'<tr><td colspan="8" class="muted">Sin datos</td></tr>')+'</tbody>';
+}
+
+/* ---------- base / CSV ---------- */
+const COLS=['codigo','fecha','municipio','zona','encuestador','sexo','edad','educacion','cobertura','tabaco','cigDia','humo','alcohol','fyv','sal','vigD','vigM','modD','modM','camD','camM','peso','talla','cintura','pas1','pad1','pas2','pad2','glucemia','ayunas','colTotal','htaDx','htaTto','dbtDx','dbtTto','colDx','evCV'];
+const DCOLS=['pas','pad','imc','met','hta','htaNoDx','glu','obe','cintR','tab','afBaja','fyvIns','col','nfr'];
+function csv(){
+  const rows=dataset(); const head=[...COLS,...DCOLS.map(c=>c+'_der')];
+  const fmt=v=>v==null?'':typeof v==='boolean'?(v?1:0):typeof v==='number'?String(Math.round(v*100)/100).replace('.',','):`"${String(v).replace(/"/g,'""')}"`;
+  return '﻿'+head.join(';')+'\n'+rows.map(r=>{const d=deriv(r);return[...COLS.map(c=>fmt(r[c])),...DCOLS.map(c=>fmt(d[c]))].join(';')}).join('\n');
+}
+function renderBase(){
+  const rows=dataset().slice().sort((a,b)=>(b.creado||0)-(a.creado||0)||String(b.fecha).localeCompare(a.fecha));
+  const isDemo=!real.length;
+  $('#baseCount').textContent=`${rows.length} registros en ${ctxMuni}${isDemo&&rows.length?' · datos de ejemplo':''}`;
+  const h=['Código','Fecha','Zona','Sexo','Edad','PA prom.','IMC','Glucemia','Tabaco','MET-min','FR','Alertas'];
+  $('#tBase').innerHTML=`<thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}${canDelete&&!isDemo?'<th></th>':''}</tr></thead><tbody>`+rows.slice(0,500).map(r=>{const d=deriv(r);const al=derivacion(r,d);const lvl=al.some(a=>a[0]==='crit')?'crit':al.length?'warn':'ok';
+    return `<tr><td>${esc(r.codigo)}</td><td>${esc(r.fecha)}</td><td>${esc(r.zona)}</td><td>${r.sexo}</td><td class="num">${r.edad}</td><td class="num">${d.pas!=null?Math.round(d.pas)+'/'+Math.round(d.pad):'—'}</td><td class="num">${d.imc?f1(d.imc):'—'}</td><td class="num">${r.glucemia??'—'}</td><td>${{diario:'Diario',ocasional:'Ocasional',ex:'Ex',nunca:'Nunca'}[r.tabaco]||'—'}</td><td class="num">${d.met}</td><td class="num">${d.nfr}</td><td><span class="pill ${lvl}">${lvl==='crit'?'Urgente':lvl==='warn'?'Derivar':'Sin alerta'}</span></td>${canDelete&&!isDemo?`<td><button class="btn sm ghost" data-del="${esc(r._id)}">Borrar</button></td>`:''}</tr>`}).join('')+'</tbody>';
+}
+$('#btnCsv').addEventListener('click',()=>{
+  const blob=new Blob([csv()],{type:'text/csv;charset=utf-8'}), url=URL.createObjectURL(blob), el=document.createElement('a');
+  el.href=url; el.download=`rcv_demostracion_${new Date().toISOString().slice(0,10)}.csv`; document.body.appendChild(el); el.click(); el.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),2000); toast('CSV descargado (datos ficticios)');});
+$('#btnCopy').addEventListener('click',()=>{navigator.clipboard.writeText(csv()).then(()=>toast('CSV copiado. Pegalo en una planilla.'),()=>toast('No se pudo copiar en esta vista.'))});
+
+/* ---------- formulario ---------- */
+const FIELDS={num:['edad','cigDia','fyv','vigD','vigM','modD','modM','camD','camM','peso','talla','cintura','pas1','pad1','pas2','pad2','glucemia','colTotal'],
+  txt:['fecha','municipio','zona','encuestador','sexo','educacion','cobertura','tabaco','sal','ayunas'],chk:['humo','alcohol','htaDx','htaTto','dbtDx','dbtTto','colDx','evCV']};
+function readForm(){const r={codigo:$('#codigo').value};FIELDS.num.forEach(k=>r[k]=num($('#'+k).value));FIELDS.txt.forEach(k=>r[k]=$('#'+k).value.trim());FIELDS.chk.forEach(k=>r[k]=$('#'+k).checked);return r}
+function newCode(){const m=(($('#municipio')?.value)||ctxMuni).normalize('NFD').replace(/[^A-Za-z]/g,'').slice(0,3).toUpperCase()||'MUN';return `${m}-${Date.now().toString(36).toUpperCase().slice(-6)}`}
+function resetForm(keep){const enc=$('#encuestador').value,zona=$('#zona').value,muni=$('#municipio').value;$('#enc').reset();
+  $('#fecha').value=new Date(Date.now()-3*3600e3).toISOString().slice(0,10);$('#municipio').value=keep&&muni?muni:ctxMuni;if(keep){$('#encuestador').value=enc;$('#zona').value=zona}
+  $('#codigo').value=newCode();$('#resultBox').hidden=true;$('#livePills').innerHTML='';$('#formMsg').textContent='Los campos de presión, peso, talla y hábitos son obligatorios.'}
+function livePills(){const r=readForm(),d=deriv(r),p=[];
+  if(d.imc) p.push([d.obe?'crit':d.sobre?'warn':'ok',`IMC ${f1(d.imc)}`]);
+  if(d.pas!=null) p.push([d.pas>=180||d.pad>=110?'crit':d.paElev?'warn':'ok',`PA promedio ${Math.round(d.pas)}/${Math.round(d.pad)}`]);
+  if(r.glucemia!=null) p.push([r.glucemia>=250||r.glucemia<70?'crit':d.glucMed?'warn':'ok',`Glucemia ${r.glucemia}`]);
+  if(d.cintR!=null) p.push([d.cintR?'warn':'ok',`Cintura ${d.cintR?'de riesgo':'normal'}`]);
+  p.push([d.afBaja?'warn':'ok',`${d.met} MET-min/sem`]);
+  $('#livePills').innerHTML=p.map(([c,t])=>`<span class="pill ${c}">${t}</span>`).join('')}
+$('#enc').addEventListener('input',livePills);
+$('#btnReset').addEventListener('click',()=>resetForm(true));
+$('#enc').addEventListener('submit',async e=>{e.preventDefault();
+  const r=readForm(), miss=[];
+  if(!$('#consent').checked) miss.push('consentimiento');
+  [['fecha','fecha'],['municipio','municipio'],['zona','zona'],['encuestador','encuestador/a'],['sexo','sexo'],['tabaco','tabaco']].forEach(([k,l])=>{if(!r[k])miss.push(l)});
+  [['edad','edad'],['fyv','frutas y verduras'],['peso','peso'],['talla','talla'],['pas1','PAS'],['pad1','PAD']].forEach(([k,l])=>{if(r[k]==null)miss.push(l)});
+  if(r.edad!=null&&r.edad<18) miss.push('edad (18 o más)');
+  if(r.pas1!=null&&r.pad1!=null&&r.pad1>=r.pas1) miss.push('PA (la diastólica supera a la sistólica)');
+  if(miss.length){$('#formMsg').textContent='Falta o revisar: '+miss.join(', ')+'.';$('#formMsg').style.color='var(--crit)';return}
+  $('#formMsg').style.color='';
+  const d=deriv(r), al=derivacion(r,d);
+  const box=$('#resultBox'); const lvl=al.some(a=>a[0]==='crit')?'':al.length?'warn':'ok';
+  box.className='alertbox '+lvl; box.hidden=false;
+  box.innerHTML=`<h4>${lvl===''?'Derivación urgente':lvl==='warn'?'Indicar consulta en el centro de salud':'Sin criterios de derivación'}</h4>`+(al.length?`<ul>${al.map(a=>`<li>${esc(a[1])}</li>`).join('')}</ul>`:'<p style="margin:0">Reforzar hábitos saludables y control anual.</p>');
+  $('#btnSave').disabled=true;
+  try{
+    DEMO.unshift({...r,municipio:DEFAULT_MUNI,demo:true}); showDemo=true; renderAll();
+    ctxMuni=DEFAULT_MUNI; toast(`Encuesta ${r.codigo} agregada al tablero (demostración, no se guarda)`); resetForm(true);
+    box.hidden=false; window.scrollTo({top:box.offsetTop-80,behavior:'smooth'});
+  }catch(err){toast('No se pudo guardar: '+(err.message||err.code||'error'))}
+  finally{$('#btnSave').disabled=false}});
+
+/* ---------- navegación ---------- */
+function setTab(t){$$('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));$$('[role=tabpanel]').forEach(p=>p.hidden=p.id!=='p-'+t);try{localStorage.setItem('rcv_tab',t)}catch(e){}}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+$$('.seg button').forEach(b=>b.addEventListener('click',()=>{filt.sexo=b.dataset.sexo;$$('.seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));renderDash()}));
+$('#fZona').addEventListener('change',e=>{filt.zona=e.target.value;renderDash()});
+$('#fEdad').addEventListener('change',e=>{filt.edad=e.target.value;renderDash()});
+$('#ctxMuni').addEventListener('change',e=>{ctxMuni=e.target.value;filt.zona='';renderAll();if(!$('#codigo').value||$('#municipio').value==='')resetForm(false);$('#municipio').value=ctxMuni});
+$('#demoToggle').addEventListener('click',()=>{showDemo=!showDemo;renderAll()});
+
+function renderAll(){renderCtx();renderDash();renderBase()}
+try{const t=localStorage.getItem('rcv_tab');if(t&&document.getElementById('p-'+t))setTab(t)}catch(e){}
+resetForm(false); renderAll();
+
+/* ---------- demostración: sin base de datos ---------- */
+})();
+</script>
+
+</body></html>
