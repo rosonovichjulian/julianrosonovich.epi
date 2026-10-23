@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operacionalización de variables · Planilla gratuita | Julián Rosonovich</title>
+<meta name="description" content="Planilla gratuita para operacionalizar las variables de tu investigación: rol, tipo, definición conceptual y operacional, categorías e instrumento. Descargala en PDF o Excel.">
+<meta property="og:title" content="Operacionalización de variables · Planilla gratuita">
+<meta property="og:description" content="Definí cada variable de tu estudio: qué es, cómo la medís y en qué escala.">
+<link rel="icon" type="image/png" href="/plataforma/logo.png">
+<script src="/recursos/acceso.js"></script>
+<script>if (window.JR_ACCESO) JR_ACCESO.proteger('operacionalizacion');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E2D51; --navy-2:#163E6B; --teal:#12888C; --teal-soft:#7FD3D3; --mint:#EEF6F6;
+  --ink:#1E2A36; --muted:#5A6B7B; --line:#C9D3DD; --bg:#FFFFFF; --radius:12px; --max:1000px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Montserrat,system-ui,sans-serif;color:var(--navy);margin:0;line-height:1.2}
+a{color:var(--teal);text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+
+header{border-bottom:1px solid var(--line);background:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--navy)}
+.logo img{height:40px;width:auto;display:block}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text strong{font-family:Montserrat,sans-serif;font-size:16px;font-weight:700}
+.logo-text span{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.06em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s,color .15s;background:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#0E7478;color:#fff}
+.btn-ghost{border-color:var(--navy);color:var(--navy)}
+.btn-ghost:hover{background:var(--navy);color:#fff}
+.btn-light{border-color:var(--line);color:var(--muted);font-size:14px;padding:9px 16px}
+.btn-light:hover{border-color:var(--navy);color:var(--navy)}
+
+.hero{background:var(--navy);color:#fff;padding:56px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 340px at 88% 10%,rgba(18,136,140,.38),transparent 70%)}
+.hero .wrap{position:relative}
+.hero .eyebrow{color:var(--teal-soft)}
+.hero h1{color:#fff;font-size:clamp(30px,4.6vw,46px);margin:12px 0 14px}
+.hero h1 em{font-style:normal;color:var(--teal-soft)}
+.hero p{color:#D5DEE8;max-width:640px;margin:0;font-size:18px}
+.pico-letters{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.pico-letters span{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 14px 6px 6px;font-size:15px;color:#D5DEE8}
+.pico-letters b{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-size:15px}
+
+main section{padding:44px 0}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.seg{display:inline-flex;background:var(--mint);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;font-family:Montserrat,sans-serif;font-weight:600;font-size:14px;color:var(--muted);padding:9px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.type-note{color:var(--muted);font-size:15px;margin:-8px 0 22px}
+
+.fields{display:grid;gap:14px}
+.field{display:grid;grid-template-columns:64px 1fr;gap:18px;border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.field:focus-within{border-color:var(--teal);box-shadow:0 10px 28px -20px rgba(14,45,81,.45)}
+.field .letter{width:64px;height:64px;border-radius:14px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:700;font-size:28px;position:relative}
+.field.done .letter{background:var(--teal)}
+.field.done .letter::after{content:"✓";position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--teal);color:var(--teal);font-size:12px;display:grid;place-items:center}
+.field.optional .letter{background:#fff;color:var(--navy);border:2px dashed var(--line)}
+.field.optional.done .letter{background:var(--teal);color:#fff;border-color:var(--teal)}
+.field label{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:17px;display:block}
+.field label small{font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.field .help{color:var(--muted);font-size:15px;margin:2px 0 10px}
+.field textarea{width:100%;min-height:58px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:16px;color:var(--ink);background:#FBFCFD}
+.field textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.field .ex{font-size:14px;color:var(--teal);margin-top:6px}
+.field .ex b{font-weight:600;color:var(--muted)}
+
+.result{margin-top:26px;background:var(--navy);border-radius:18px;padding:30px;color:#fff;position:relative;overflow:hidden}
+.result::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 220px at 100% 0%,rgba(18,136,140,.35),transparent 70%)}
+.result>*{position:relative}
+.result .eyebrow{color:var(--teal-soft)}
+.question{font-family:Montserrat,sans-serif;font-weight:600;font-size:clamp(19px,2.4vw,24px);line-height:1.45;margin:12px 0 18px}
+.question .gap{color:#8FA3B8;border-bottom:2px dashed #4A6585;font-weight:500}
+.question .v{color:var(--teal-soft)}
+.verb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;font-size:15px;color:#D5DEE8}
+.verb-row select{font:inherit;font-size:15px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;padding:6px 10px}
+.verb-row select option{color:var(--ink)}
+.progress{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.progress i{display:block;height:100%;width:0;background:var(--teal-soft);transition:width .3s}
+.result .actions{display:flex;gap:10px;flex-wrap:wrap}
+.result .btn-ghost{border-color:#fff;color:#fff}
+.result .btn-ghost:hover{background:#fff;color:var(--navy)}
+.design{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);color:#D5DEE8;font-size:15px}
+.design b{color:#fff}
+
+.finer{margin-top:26px;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.finer h2{font-size:20px;margin-bottom:4px}
+.finer p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.finer-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.finer label{display:flex;flex-direction:column;gap:4px;background:var(--mint);border-radius:10px;padding:14px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.finer label:has(input:checked){border-color:var(--teal);background:#fff}
+.finer input{accent-color:var(--teal);width:18px;height:18px}
+.finer b{font-family:Montserrat,sans-serif;color:var(--navy);font-size:15px}
+.finer span{font-size:13px;color:var(--muted);line-height:1.35}
+
+.cta{margin-top:26px;background:var(--mint);border-radius:18px;padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cta h2{font-size:21px;margin-bottom:4px}
+.cta p{margin:0;color:var(--muted)}
+.cta .btn{flex-shrink:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);opacity:0;background:var(--navy);color:#fff;padding:11px 18px;border-radius:999px;font-size:15px;transition:all .25s;pointer-events:none;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{padding:28px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+
+.steps-hero{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.steps-hero span{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 14px 6px 6px;font-size:15px;color:#D5DEE8}
+.steps-hero b{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-size:14px}
+.study{border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px;background:#fff}
+.study label{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:16px}
+.study label small{font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.study textarea{margin-top:8px}
+textarea,input[type=text],select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink);background:#FBFCFD}
+textarea{min-height:46px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--teal);background:#fff}
+.vars{display:grid;gap:16px}
+.var{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.var:focus-within{border-color:var(--teal);box-shadow:0 10px 28px -20px rgba(14,45,81,.45)}
+.vhead{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--mint)}
+.vnum{flex:none;width:38px;height:38px;border-radius:11px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:700}
+.vhead input{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);background:#fff}
+.vdel{flex:none;border:0;background:none;color:var(--muted);font-size:14px;cursor:pointer;padding:8px;border-radius:8px}
+.vdel:hover{color:#B3261E;background:#fff}
+.vbody{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;padding:16px 18px 18px}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f.wide{grid-column:1/-1}
+.f>span{font-family:Montserrat,sans-serif;font-weight:600;font-size:13.5px;color:var(--navy)}
+.f>span i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-weight:400;color:var(--muted);font-size:13.5px}
+.hint{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;background:#F2F7F9;border-left:4px solid var(--teal-soft);border-radius:10px;padding:10px 14px;font-size:14.5px;color:#33414E}
+.hint b{color:var(--navy)}
+.role-dep .vnum{background:#FF7A59}.role-ind .vnum{background:var(--teal)}.role-conf .vnum{background:#E09A00}.role-desc .vnum{background:#5A6B7B}
+.add{margin-top:16px;width:100%;border:2px dashed #9FC9CC;border-radius:16px;background:transparent;padding:16px;font-family:Montserrat,sans-serif;font-weight:700;color:var(--teal);font-size:15px;cursor:pointer}
+.add:hover{background:var(--mint)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:14px;color:var(--muted);margin:-6px 0 18px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.summary{margin-top:26px;background:var(--navy);border-radius:18px;padding:26px 28px;color:#fff;position:relative;overflow:hidden}
+.summary::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 220px at 100% 0%,rgba(18,136,140,.35),transparent 70%)}
+.summary>*{position:relative}
+.summary .eyebrow{color:var(--teal-soft)}
+.counts{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 18px}
+.counts span{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 14px;font-size:15px;color:#D5DEE8}
+.counts b{color:#fff}
+.checks{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:6px;font-size:15.5px;color:#D5DEE8}
+.checks li::before{content:"•";color:var(--teal-soft);margin-right:8px}
+.checks li.ok::before{content:"✓"}
+.summary .actions{display:flex;gap:10px;flex-wrap:wrap}
+.summary .btn-ghost{border-color:#fff;color:#fff}
+.summary .btn-ghost:hover{background:#fff;color:var(--navy)}
+.glos{margin-top:26px;border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+.glos h2{font-size:20px;margin-bottom:12px}
+.glos-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.glos-grid div{background:var(--mint);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--muted);line-height:1.35}
+.glos-grid b{display:block;font-family:Montserrat,sans-serif;color:var(--navy);font-size:14.5px;margin-bottom:2px}
+#sheet{display:none}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{font-size:9pt}
+  header,.hero,main,footer,.toast{display:none!important}
+  #sheet{display:block;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sh-head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:6px;margin-bottom:8px}
+  .sh-head .logo img{height:30px}
+  .sh-head .logo-text strong{font-size:12pt}
+  .sh-head .logo-text span{font-size:7.5pt}
+  .sh-title{text-align:right}
+  .sh-title h1{font-size:14pt}
+  .sh-title div{font-size:8.5pt;color:var(--muted)}
+  .sh-study{font-size:9.5pt;margin:0 0 6px}
+  table.sh{width:100%;border-collapse:collapse;font-size:8.5pt}
+  table.sh th{background:var(--navy);color:#fff;font-family:Montserrat,sans-serif;font-weight:600;font-size:7.5pt;letter-spacing:.04em;text-align:left;padding:2.2mm 2mm}
+  table.sh td{border-bottom:1px solid var(--line);padding:2mm;vertical-align:top;white-space:pre-wrap}
+  table.sh tr{break-inside:avoid}
+  table.sh td.blank{height:11mm}
+  .sh-foot{margin-top:3mm;padding-top:2mm;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:8pt;color:var(--muted)}
+}
+@media (max-width:760px){
+  .glos-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cta{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .hero{padding:40px 0 46px}
+  .logo-text span{display:none}
+  .vbody{grid-template-columns:1fr;padding:14px}
+  .summary{padding:22px}
+  .summary .actions .btn{flex:1 1 100%}
+  .nav .btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Volver al inicio">
+      <img src="/plataforma/logo.png" alt="">
+      <span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA</span></span>
+    </a>
+    <a class="btn btn-ghost" href="/recursos/">Más recursos gratis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Planilla gratuita</span>
+    <h1>Operacionalización de <em>variables</em></h1>
+    <p>Definí cada variable de tu estudio: qué es, cómo la vas a medir y en qué escala. Es la base de tu instrumento de recolección y de tu análisis estadístico.</p>
+    <div class="steps-hero">
+      <span><b>1</b>Rol en el estudio</span><span><b>2</b>Tipo y escala</span><span><b>3</b>Definición conceptual</span><span><b>4</b>Definición operacional</span>
+    </div>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="tools">
+        <button type="button" class="btn btn-light" id="example">Ver un ejemplo</button>
+        <button type="button" class="btn btn-light" id="clear">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="study">
+      <label for="study">Pregunta u objetivo de tu estudio <small>opcional</small></label>
+      <textarea id="study" rows="2" placeholder="Ej.: Identificar los factores asociados al deterioro cognitivo en pacientes con enfermedad de Parkinson"></textarea>
+    </div>
+
+    <div class="legend">
+      <span><i style="background:#FF7A59"></i>Dependiente</span><span><i style="background:#12888C"></i>Independiente</span><span><i style="background:#E09A00"></i>Confusora</span><span><i style="background:#5A6B7B"></i>Descriptiva</span>
+    </div>
+
+    <div class="vars" id="vars"></div>
+    <button type="button" class="add" id="add">+ Agregar variable</button>
+
+    <div class="summary" aria-live="polite">
+      <span class="eyebrow">Revisión de tu tabla</span>
+      <div class="counts" id="counts"></div>
+      <ul class="checks" id="checks"></ul>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="pdf">Descargar PDF</button>
+        <button type="button" class="btn btn-ghost" id="csv">Descargar Excel (CSV)</button>
+      </div>
+    </div>
+
+    <div class="glos">
+      <h2>Tipos de variables</h2>
+      <div class="glos-grid">
+        <div><b>Cualitativa nominal</b>Categorías sin orden. Ej.: sexo, grupo sanguíneo.</div>
+        <div><b>Cualitativa ordinal</b>Categorías con orden. Ej.: estadio, nivel educativo.</div>
+        <div><b>Cuantitativa discreta</b>Valores enteros que se cuentan. Ej.: número de internaciones.</div>
+        <div><b>Cuantitativa continua</b>Valores que se miden en un continuo. Ej.: peso, presión arterial.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h2>¿Querés llevar esta tabla a tu registro de pacientes?</h2>
+        <p>La convierto en tu formulario de recolección y en una base de datos lista para analizar.</p>
+      </div>
+      <a class="btn btn-primary" id="wa" href="https://wa.me/5493515288994" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud</span>
+    <a href="https://www.instagram.com/julianrosonovich.epi/" target="_blank" rel="noopener">@julianrosonovich.epi</a>
+  </div>
+</footer>
+
+<div id="sheet" aria-hidden="true">
+  <div class="sh-head">
+    <div class="logo"><img src="/plataforma/logo.png" alt=""><span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA DE LA INVESTIGACIÓN</span></span></div>
+    <div class="sh-title"><h1>Operacionalización de variables</h1><div>Tabla de definición y medición de variables</div></div>
+  </div>
+  <p class="sh-study" id="sh-study"></p>
+  <table class="sh"><thead><tr><th style="width:12%">Variable</th><th style="width:9%">Rol</th><th style="width:11%">Tipo</th><th style="width:20%">Definición conceptual</th><th style="width:22%">Definición operacional</th><th style="width:14%">Categorías / unidad</th><th style="width:12%">Instrumento / fuente</th></tr></thead><tbody id="sh-body"></tbody></table>
+  <div class="sh-foot"><span>julianrosonovich-epi.vercel.app/operacionalizacion</span><span>@julianrosonovich.epi · julianrosonovich.epi@gmail.com</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const ROLES = {dep:'Dependiente (resultado)', ind:'Independiente (exposición o intervención)', conf:'Confusora', desc:'Descriptiva'};
+  const ROLES_SHORT = {dep:'Dependiente', ind:'Independiente', conf:'Confusora', desc:'Descriptiva'};
+  const TIPOS = {nom:'Cualitativa nominal', ord:'Cualitativa ordinal', dis:'Cuantitativa discreta', con:'Cuantitativa continua'};
+  const RESUMEN = {
+    nom:'Se resume con <b>frecuencias y porcentajes</b>. Si tiene dos categorías (sí/no), es <b>dicotómica</b>.',
+    ord:'Se resume con <b>frecuencias y porcentajes</b>, respetando el orden de las categorías; también con <b>mediana</b>.',
+    dis:'Se resume con <b>media y desvío estándar</b> o <b>mediana y rango intercuartílico</b>, según su distribución.',
+    con:'Se resume con <b>media y desvío estándar</b> si su distribución es normal, o con <b>mediana y rango intercuartílico</b> si no lo es.'
+  };
+  const EMPTY = () => ({nombre:'', rol:'', tipo:'', conc:'', oper:'', cat:'', inst:''});
+  const EXAMPLE = {
+    study:'Identificar los factores asociados al deterioro cognitivo en pacientes con enfermedad de Parkinson',
+    vars:[
+      {nombre:'Deterioro cognitivo', rol:'dep', tipo:'nom', conc:'Disminución de las funciones cognitivas respecto del nivel previo de la persona.', oper:'Puntaje de la escala MoCA menor a 26 puntos.', cat:'Sí / No', inst:'Escala MoCA'},
+      {nombre:'Edad', rol:'ind', tipo:'dis', conc:'Tiempo transcurrido desde el nacimiento.', oper:'Años cumplidos al momento de la evaluación.', cat:'Años', inst:'Historia clínica'},
+      {nombre:'Tiempo de evolución', rol:'ind', tipo:'con', conc:'Tiempo transcurrido desde el diagnóstico de la enfermedad.', oper:'Años desde la fecha del diagnóstico hasta la evaluación.', cat:'Años', inst:'Historia clínica'},
+      {nombre:'Estadio de la enfermedad', rol:'ind', tipo:'ord', conc:'Grado de compromiso motor de la enfermedad de Parkinson.', oper:'Estadio según la escala de Hoehn y Yahr.', cat:'1 / 2 / 3 / 4 / 5', inst:'Escala de Hoehn y Yahr'},
+      {nombre:'Nivel educativo', rol:'conf', tipo:'ord', conc:'Máximo nivel de educación formal alcanzado.', oper:'Último nivel completo referido por el paciente.', cat:'Primario / Secundario / Terciario o universitario', inst:'Entrevista'},
+      {nombre:'Sexo', rol:'desc', tipo:'nom', conc:'Sexo registrado al nacer.', oper:'Registro en la historia clínica.', cat:'Femenino / Masculino', inst:'Historia clínica'}
+    ]
+  };
+  let data = {study:'', vars:[EMPTY(), EMPTY()]};
+  const store = {
+    get(){ try { return JSON.parse(localStorage.getItem('opv-v1')||'null'); } catch(e){ return null; } },
+    set(v){ try { localStorage.setItem('opv-v1', JSON.stringify(v)); } catch(e){} }
+  };
+  const esc = s => String(s||'').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const opts = (obj, sel, ph) => '<option value="">'+ph+'</option>' + Object.entries(obj).map(([k,v]) => '<option value="'+k+'"'+(k===sel?' selected':'')+'>'+v+'</option>').join('');
+
+  function card(v, i){
+    return '<div class="var'+(v.rol?' role-'+v.rol:'')+'" data-i="'+i+'">'+
+      '<div class="vhead"><div class="vnum">'+(i+1)+'</div><input type="text" data-k="nombre" value="'+esc(v.nombre)+'" placeholder="Nombre de la variable" aria-label="Nombre de la variable"><button type="button" class="vdel" data-del="'+i+'" aria-label="Quitar variable">Quitar</button></div>'+
+      '<div class="vbody">'+
+        '<label class="f"><span>Rol en el estudio</span><select data-k="rol">'+opts(ROLES, v.rol, 'Elegí el rol')+'</select></label>'+
+        '<label class="f"><span>Tipo de variable</span><select data-k="tipo">'+opts(TIPOS, v.tipo, 'Elegí el tipo')+'</select></label>'+
+        (v.tipo ? '<div class="hint"><span>'+RESUMEN[v.tipo]+'</span></div>' : '')+
+        '<label class="f wide"><span>Definición conceptual <i>· qué es, según la teoría</i></span><textarea data-k="conc" rows="2">'+esc(v.conc)+'</textarea></label>'+
+        '<label class="f wide"><span>Definición operacional <i>· cómo la vas a medir en tu estudio</i></span><textarea data-k="oper" rows="2">'+esc(v.oper)+'</textarea></label>'+
+        '<label class="f"><span>Categorías o unidad de medida</span><input type="text" data-k="cat" value="'+esc(v.cat)+'" placeholder="Ej.: Sí / No, años, mmHg"></label>'+
+        '<label class="f"><span>Instrumento o fuente</span><input type="text" data-k="inst" value="'+esc(v.inst)+'" placeholder="Ej.: historia clínica, escala, cuestionario"></label>'+
+      '</div></div>';
+  }
+  function autosize(){ document.querySelectorAll('textarea').forEach(ta => { ta.style.height='auto'; ta.style.height = ta.scrollHeight + 2 + 'px'; }); }
+  function draw(){ $('#vars').innerHTML = data.vars.map(card).join(''); $('#study').value = data.study || ''; autosize(); summary(); }
+
+  function summary(){
+    const vs = data.vars.filter(v => v.nombre.trim());
+    const n = r => vs.filter(v => v.rol === r).length;
+    $('#counts').innerHTML = '<span><b>'+vs.length+'</b> variables</span>' + Object.keys(ROLES_SHORT).map(r => '<span><b>'+n(r)+'</b> '+ROLES_SHORT[r].toLowerCase()+(n(r)===1?'':'s')+'</span>').join('');
+    const complete = vs.filter(v => v.rol && v.tipo && v.conc.trim() && v.oper.trim() && v.cat.trim() && v.inst.trim()).length;
+    const items = [
+      [n('dep') >= 1, n('dep') >= 1 ? 'Definiste la variable dependiente (tu resultado).' : 'Falta definir la variable dependiente: es el resultado que querés medir.'],
+      [n('ind') >= 1, n('ind') >= 1 ? 'Tenés al menos una variable independiente.' : 'Agregá al menos una variable independiente (exposición o intervención).'],
+      [vs.length > 0 && complete === vs.length, vs.length ? complete+' de '+vs.length+' variables tienen todos los campos completos.' : 'Cargá tu primera variable.'],
+      [vs.length === 0 || vs.every(v => !v.oper.trim() || v.oper.trim().length > 12), 'Cada definición operacional debe decir con qué y cómo medís, no repetir la definición conceptual.']
+    ];
+    $('#checks').innerHTML = items.map(([ok, t]) => '<li'+(ok?' class="ok"':'')+'>'+t+'</li>').join('');
+    const msg = 'Hola Julián, completé la tabla de operacionalización de variables' + (vs.length ? ' ('+vs.length+' variables)' : '') + ' y quiero convertirla en mi registro de pacientes.';
+    $('#wa').href = 'https://wa.me/5493515288994?text=' + encodeURIComponent(msg);
+    store.set(data);
+  }
+
+  $('#vars').addEventListener('input', e => {
+    const el = e.target, k = el.dataset.k; if (!k) return;
+    const i = +el.closest('.var').dataset.i; data.vars[i][k] = el.value;
+    if (k === 'rol' || k === 'tipo') { draw(); return; }
+    if (el.tagName === 'TEXTAREA') autosize();
+    summary();
+  });
+  $('#vars').addEventListener('change', e => { const el = e.target; if (el.tagName === 'SELECT') { const i = +el.closest('.var').dataset.i; data.vars[i][el.dataset.k] = el.value; draw(); } });
+  $('#vars').addEventListener('click', e => {
+    const d = e.target.dataset.del; if (d === undefined) return;
+    data.vars.splice(+d, 1); if (!data.vars.length) data.vars.push(EMPTY()); draw();
+  });
+  $('#study').addEventListener('input', e => { data.study = e.target.value; autosize(); summary(); });
+  $('#add').addEventListener('click', () => { data.vars.push(EMPTY()); draw(); const last = document.querySelector('.var:last-child input'); if (last) last.focus(); });
+  $('#example').addEventListener('click', () => { data = JSON.parse(JSON.stringify(EXAMPLE)); draw(); toast('Cargamos un ejemplo. Reemplazalo con tus variables.'); });
+  $('#clear').addEventListener('click', () => { data = {study:'', vars:[EMPTY(), EMPTY()]}; draw(); });
+
+  function toast(m){ const el = $('#toast'); el.textContent = m; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('show'), 2400); }
+
+  function fillSheet(){
+    const s = (data.study||'').trim();
+    $('#sh-study').innerHTML = '<b>Pregunta u objetivo:</b> ' + (s ? esc(s) : '______________________________________________________________');
+    const vs = data.vars.filter(v => v.nombre.trim() || v.conc.trim() || v.oper.trim());
+    const rows = vs.map(v => '<tr><td><b>'+esc(v.nombre)+'</b></td><td>'+esc(ROLES_SHORT[v.rol]||'')+'</td><td>'+esc(TIPOS[v.tipo]||'')+'</td><td>'+esc(v.conc)+'</td><td>'+esc(v.oper)+'</td><td>'+esc(v.cat)+'</td><td>'+esc(v.inst)+'</td></tr>');
+    const blanks = Math.max(0, 6 - rows.length);
+    for (let k = 0; k < blanks; k++) rows.push('<tr>'+'<td class="blank"></td>'.repeat(7)+'</tr>');
+    $('#sh-body').innerHTML = rows.join('');
+  }
+  $('#pdf').addEventListener('click', () => { fillSheet(); toast('Elegí "Guardar como PDF" en la ventana de impresión'); setTimeout(() => window.print(), 350); });
+  window.addEventListener('beforeprint', fillSheet);
+
+  $('#csv').addEventListener('click', () => {
+    const q = v => '"' + String(v||'').replace(/"/g,'""') + '"';
+    const head = ['Variable','Rol','Tipo','Definición conceptual','Definición operacional','Categorías / unidad','Instrumento / fuente'];
+    const lines = [head.map(q).join(';')].concat(data.vars.filter(v => v.nombre.trim()).map(v => [v.nombre, ROLES_SHORT[v.rol]||'', TIPOS[v.tipo]||'', v.conc, v.oper, v.cat, v.inst].map(q).join(';')));
+    const blob = new Blob(['﻿' + lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = 'operacionalizacion_variables.csv'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000); toast('Tabla descargada. Abrila con Excel.');
+  });
+  $('#y').textContent = new Date().getFullYear();
+
+  const saved = store.get();
+  if (saved && Array.isArray(saved.vars) && saved.vars.length) data = {study: saved.study||'', vars: saved.vars.map(v => Object.assign(EMPTY(), v))};
+  draw();
+})();
+</script>
+</body>
+</html>
