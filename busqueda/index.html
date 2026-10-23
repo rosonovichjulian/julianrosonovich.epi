@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Búsqueda bibliográfica con DeCS y MeSH · Planilla gratuita | Julián Rosonovich</title>
+<meta name="description" content="Planilla gratuita para planificar y registrar tu búsqueda bibliográfica: conceptos, descriptores DeCS y MeSH, sinónimos, estrategia para PubMed y BVS, y registro de resultados.">
+<meta property="og:title" content="Búsqueda bibliográfica con DeCS y MeSH · Planilla gratuita">
+<meta property="og:description" content="Armá tu estrategia de búsqueda para PubMed y la BVS y registrá tus resultados.">
+<link rel="icon" type="image/png" href="/plataforma/logo.png">
+<script src="/recursos/acceso.js"></script>
+<script>if (window.JR_ACCESO) JR_ACCESO.proteger('busqueda');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0E2D51; --navy-2:#163E6B; --teal:#12888C; --teal-soft:#7FD3D3; --mint:#EEF6F6;
+  --ink:#1E2A36; --muted:#5A6B7B; --line:#C9D3DD; --bg:#FFFFFF; --radius:12px; --max:1000px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Sans 3',system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Montserrat,system-ui,sans-serif;color:var(--navy);margin:0;line-height:1.2}
+a{color:var(--teal);text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:Montserrat,sans-serif;font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--teal)}
+
+header{border-bottom:1px solid var(--line);background:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;color:var(--navy)}
+.logo img{height:40px;width:auto;display:block}
+.logo-text{display:flex;flex-direction:column;line-height:1.15}
+.logo-text strong{font-family:Montserrat,sans-serif;font-size:16px;font-weight:700}
+.logo-text span{font-size:12px;color:var(--teal);font-weight:600;letter-spacing:.06em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Montserrat,sans-serif;font-weight:600;font-size:15px;padding:12px 20px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:transform .15s,background .15s,color .15s;background:none}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:#0E7478;color:#fff}
+.btn-ghost{border-color:var(--navy);color:var(--navy)}
+.btn-ghost:hover{background:var(--navy);color:#fff}
+.btn-light{border-color:var(--line);color:var(--muted);font-size:14px;padding:9px 16px}
+.btn-light:hover{border-color:var(--navy);color:var(--navy)}
+
+.hero{background:var(--navy);color:#fff;padding:56px 0 64px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 340px at 88% 10%,rgba(18,136,140,.38),transparent 70%)}
+.hero .wrap{position:relative}
+.hero .eyebrow{color:var(--teal-soft)}
+.hero h1{color:#fff;font-size:clamp(30px,4.6vw,46px);margin:12px 0 14px}
+.hero h1 em{font-style:normal;color:var(--teal-soft)}
+.hero p{color:#D5DEE8;max-width:640px;margin:0;font-size:18px}
+.pico-letters{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.pico-letters span{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 14px 6px 6px;font-size:15px;color:#D5DEE8}
+.pico-letters b{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-size:15px}
+
+main section{padding:44px 0}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.seg{display:inline-flex;background:var(--mint);border-radius:999px;padding:4px}
+.seg button{border:0;background:none;font-family:Montserrat,sans-serif;font-weight:600;font-size:14px;color:var(--muted);padding:9px 16px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.type-note{color:var(--muted);font-size:15px;margin:-8px 0 22px}
+
+.fields{display:grid;gap:14px}
+.field{display:grid;grid-template-columns:64px 1fr;gap:18px;border:1px solid var(--line);border-radius:var(--radius);padding:20px;background:#fff;transition:border-color .2s,box-shadow .2s}
+.field:focus-within{border-color:var(--teal);box-shadow:0 10px 28px -20px rgba(14,45,81,.45)}
+.field .letter{width:64px;height:64px;border-radius:14px;background:var(--navy);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:700;font-size:28px;position:relative}
+.field.done .letter{background:var(--teal)}
+.field.done .letter::after{content:"✓";position:absolute;right:-6px;top:-6px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--teal);color:var(--teal);font-size:12px;display:grid;place-items:center}
+.field.optional .letter{background:#fff;color:var(--navy);border:2px dashed var(--line)}
+.field.optional.done .letter{background:var(--teal);color:#fff;border-color:var(--teal)}
+.field label{font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);font-size:17px;display:block}
+.field label small{font-family:'Source Sans 3',sans-serif;font-weight:600;color:var(--muted);font-size:13px;margin-left:6px}
+.field .help{color:var(--muted);font-size:15px;margin:2px 0 10px}
+.field textarea{width:100%;min-height:58px;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:16px;color:var(--ink);background:#FBFCFD}
+.field textarea:focus{outline:none;border-color:var(--teal);background:#fff}
+.field .ex{font-size:14px;color:var(--teal);margin-top:6px}
+.field .ex b{font-weight:600;color:var(--muted)}
+
+.result{margin-top:26px;background:var(--navy);border-radius:18px;padding:30px;color:#fff;position:relative;overflow:hidden}
+.result::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 220px at 100% 0%,rgba(18,136,140,.35),transparent 70%)}
+.result>*{position:relative}
+.result .eyebrow{color:var(--teal-soft)}
+.question{font-family:Montserrat,sans-serif;font-weight:600;font-size:clamp(19px,2.4vw,24px);line-height:1.45;margin:12px 0 18px}
+.question .gap{color:#8FA3B8;border-bottom:2px dashed #4A6585;font-weight:500}
+.question .v{color:var(--teal-soft)}
+.verb-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;font-size:15px;color:#D5DEE8}
+.verb-row select{font:inherit;font-size:15px;border-radius:8px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;padding:6px 10px}
+.verb-row select option{color:var(--ink)}
+.progress{height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;margin-bottom:20px}
+.progress i{display:block;height:100%;width:0;background:var(--teal-soft);transition:width .3s}
+.result .actions{display:flex;gap:10px;flex-wrap:wrap}
+.result .btn-ghost{border-color:#fff;color:#fff}
+.result .btn-ghost:hover{background:#fff;color:var(--navy)}
+.design{margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14);color:#D5DEE8;font-size:15px}
+.design b{color:#fff}
+
+.finer{margin-top:26px;border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.finer h2{font-size:20px;margin-bottom:4px}
+.finer p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.finer-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.finer label{display:flex;flex-direction:column;gap:4px;background:var(--mint);border-radius:10px;padding:14px;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.finer label:has(input:checked){border-color:var(--teal);background:#fff}
+.finer input{accent-color:var(--teal);width:18px;height:18px}
+.finer b{font-family:Montserrat,sans-serif;color:var(--navy);font-size:15px}
+.finer span{font-size:13px;color:var(--muted);line-height:1.35}
+
+.cta{margin-top:26px;background:var(--mint);border-radius:18px;padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.cta h2{font-size:21px;margin-bottom:4px}
+.cta p{margin:0;color:var(--muted)}
+.cta .btn{flex-shrink:0}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(30px);opacity:0;background:var(--navy);color:#fff;padding:11px 18px;border-radius:999px;font-size:15px;transition:all .25s;pointer-events:none;z-index:99}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{padding:28px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+
+.steps-hero{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+.steps-hero span{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:999px;padding:6px 14px 6px 6px;font-size:15px;color:#D5DEE8}
+.steps-hero b{width:30px;height:30px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-family:Montserrat,sans-serif;font-size:14px}
+h2.sec{font-size:22px;margin:34px 0 6px;display:flex;align-items:center;gap:12px}
+h2.sec b{width:34px;height:34px;border-radius:10px;background:var(--navy);color:#fff;display:grid;place-items:center;font-size:16px;flex:none}
+p.sub{color:var(--muted);margin:0 0 16px;font-size:15.5px}
+.box{border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;background:#fff}
+textarea,input[type=text],input[type=number],input[type=date],select{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink);background:#FBFCFD}
+textarea{min-height:46px;resize:vertical}
+textarea:focus,input:focus,select:focus{outline:none;border-color:var(--teal);background:#fff}
+.f{display:flex;flex-direction:column;gap:5px;min-width:0}
+.f>span{font-family:Montserrat,sans-serif;font-weight:600;font-size:13.5px;color:var(--navy)}
+.f>span i{font-style:normal;font-family:'Source Sans 3',sans-serif;font-weight:400;color:var(--muted)}
+.cons{display:grid;gap:16px}
+.con{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+.con.off{opacity:.62}
+.chead{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--mint);flex-wrap:wrap}
+.chead select{width:auto;font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);background:#fff}
+.chead input[data-k=nombre]{flex:1;min-width:180px;font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy);background:#fff}
+.inc{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--muted);font-weight:600;cursor:pointer}
+.inc input{accent-color:var(--teal);width:18px;height:18px}
+.cdel{border:0;background:none;color:var(--muted);font-size:14px;cursor:pointer;padding:8px;border-radius:8px}
+.cdel:hover{color:#B3261E;background:#fff}
+.cbody{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px;padding:16px 18px 18px}
+.wide{grid-column:1/-1}
+.look{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.look a{font-size:13.5px;font-weight:600;border:1px solid var(--line);border-radius:999px;padding:5px 12px;color:var(--teal)}
+.look a:hover{border-color:var(--teal)}
+.add{margin-top:16px;width:100%;border:2px dashed #9FC9CC;border-radius:16px;background:transparent;padding:16px;font-family:Montserrat,sans-serif;font-weight:700;color:var(--teal);font-size:15px;cursor:pointer}
+.add:hover{background:var(--mint)}
+.strat{display:grid;gap:16px}
+.st{background:var(--navy);border-radius:18px;padding:22px 24px;color:#fff;position:relative;overflow:hidden}
+.st::before{content:"";position:absolute;inset:0;background:radial-gradient(380px 200px at 100% 0%,rgba(18,136,140,.35),transparent 70%)}
+.st>*{position:relative}
+.st .eyebrow{color:var(--teal-soft)}
+.st code{display:block;margin:10px 0 16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:14.5px;line-height:1.55;color:#E6F0F7;white-space:pre-wrap;word-break:break-word;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:14px 16px}
+.st .actions{display:flex;gap:10px;flex-wrap:wrap}
+.st .btn-ghost{border-color:#fff;color:#fff}
+.st .btn-ghost:hover{background:#fff;color:var(--navy)}
+.st small{display:block;color:#AFC1D3;font-size:13.5px;margin-top:12px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius)}
+table.reg{border-collapse:collapse;width:100%;min-width:860px;font-size:15px}
+table.reg th{background:var(--navy);color:#fff;font-family:Montserrat,sans-serif;font-weight:600;font-size:12.5px;letter-spacing:.04em;text-align:left;padding:10px}
+table.reg td{border-top:1px solid var(--line);padding:8px;vertical-align:top}
+table.reg td textarea{min-height:40px;font-size:14px}
+table.reg td input,table.reg td select{font-size:14px;padding:8px 10px}
+table.reg tfoot td{background:var(--mint);font-family:Montserrat,sans-serif;font-weight:700;color:var(--navy)}
+.rdel{border:0;background:none;color:var(--muted);cursor:pointer;font-size:18px;padding:6px 8px;border-radius:8px}
+.rdel:hover{color:#B3261E;background:var(--mint)}
+.regtools{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.glos{margin-top:30px;border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px}
+.glos h2{font-size:20px;margin-bottom:12px}
+.glos-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.glos-grid div{background:var(--mint);border-radius:10px;padding:12px 14px;font-size:14.5px;color:var(--muted);line-height:1.4}
+.glos-grid b{display:block;font-family:Montserrat,sans-serif;color:var(--navy);font-size:14.5px;margin-bottom:3px}
+.glos-grid code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--navy);background:#fff;border-radius:5px;padding:1px 5px}
+#sheet{display:none}
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{font-size:9pt}
+  header,.hero,main,footer,.toast{display:none!important}
+  #sheet{display:block;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sh-head{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--navy);padding-bottom:6px;margin-bottom:8px}
+  .sh-head .logo img{height:30px}
+  .sh-head .logo-text strong{font-size:12pt}
+  .sh-head .logo-text span{font-size:7.5pt}
+  .sh-title{text-align:right}
+  .sh-title h1{font-size:14pt}
+  .sh-title div{font-size:8.5pt;color:var(--muted)}
+  .sh-q{font-size:9.5pt;margin:0 0 6px}
+  .sh h3{font-family:Montserrat,sans-serif;font-size:10pt;color:var(--navy);margin:8px 0 4px}
+  table.sh{width:100%;border-collapse:collapse;font-size:8.5pt}
+  table.sh th{background:var(--navy);color:#fff;font-family:Montserrat,sans-serif;font-weight:600;font-size:7.5pt;text-align:left;padding:2mm}
+  table.sh td{border-bottom:1px solid var(--line);padding:1.8mm 2mm;vertical-align:top;white-space:pre-wrap}
+  table.sh tr{break-inside:avoid}
+  .sh-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:8pt;border:1px solid var(--line);border-radius:2mm;padding:2mm 3mm;white-space:pre-wrap;margin-bottom:2mm}
+  .sh-foot{margin-top:3mm;padding-top:2mm;border-top:1px solid var(--line);display:flex;justify-content:space-between;font-size:8pt;color:var(--muted)}
+}
+@media (max-width:760px){
+  .glos-grid{grid-template-columns:1fr}
+  .cta{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:620px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .hero{padding:40px 0 46px}
+  .logo-text span{display:none}
+  .cbody{grid-template-columns:1fr;padding:14px}
+  .st{padding:18px}
+  .st .actions .btn{flex:1 1 100%}
+  .nav .btn{display:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="Volver al inicio">
+      <img src="/plataforma/logo.png" alt="">
+      <span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA</span></span>
+    </a>
+    <a class="btn btn-ghost" href="/recursos/">Más recursos gratis</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Planilla gratuita</span>
+    <h1>Búsqueda bibliográfica con <em>DeCS y MeSH</em></h1>
+    <p>Pasá tu pregunta a conceptos, encontrá sus descriptores y armá una estrategia lista para PubMed y la BVS. Después registrá cada búsqueda para tu tesis o tu revisión.</p>
+    <div class="steps-hero">
+      <span><b>1</b>Conceptos</span><span><b>2</b>Descriptores DeCS y MeSH</span><span><b>3</b>Sinónimos</span><span><b>4</b>Estrategia</span><span><b>5</b>Registro</span>
+    </div>
+  </div>
+</section>
+
+<main>
+<section>
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="tools">
+        <button type="button" class="btn btn-light" id="example">Ver un ejemplo</button>
+        <button type="button" class="btn btn-light" id="clear">Limpiar</button>
+      </div>
+    </div>
+
+    <div class="box">
+      <label class="f" for="q"><span>Tu pregunta de investigación <i>· opcional</i></span>
+      <textarea id="q" rows="2" placeholder="Ej.: En adultos traqueostomizados en UTI, ¿un protocolo de decanulación reduce los días hasta la decanulación exitosa?"></textarea></label>
+    </div>
+
+    <h2 class="sec"><b>1</b>Conceptos y descriptores</h2>
+    <p class="sub">Un concepto por cada parte de tu pregunta. Buscá su descriptor en español en DeCS y en inglés en MeSH, y sumá sinónimos y términos libres separados por comas. Podés usar * para truncar: <b>tracheostom*</b> encuentra tracheostomy y tracheostomies.</p>
+    <div class="cons" id="cons"></div>
+    <button type="button" class="add" id="add">+ Agregar concepto</button>
+
+    <h2 class="sec"><b>2</b>Tu estrategia de búsqueda</h2>
+    <p class="sub">Se arma sola con los conceptos marcados como «Incluir»: los términos de un mismo concepto se unen con OR, y los conceptos entre sí con AND.</p>
+    <div class="strat">
+      <div class="st"><span class="eyebrow">PubMed · MEDLINE</span><code id="s-pubmed"></code>
+        <div class="actions"><button type="button" class="btn btn-primary" data-copy="pubmed">Copiar</button><a class="btn btn-ghost" id="go-pubmed" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">Buscar en PubMed</a></div>
+        <small>[Mesh] busca el descriptor MeSH; [tiab] busca el término en el título y el resumen.</small></div>
+      <div class="st"><span class="eyebrow">BVS · LILACS</span><code id="s-bvs"></code>
+        <div class="actions"><button type="button" class="btn btn-primary" data-copy="bvs">Copiar</button><a class="btn btn-ghost" id="go-bvs" href="https://pesquisa.bvsalud.org/portal/" target="_blank" rel="noopener">Buscar en la BVS</a></div>
+        <small>mh: busca el descriptor DeCS; los términos sin prefijo se buscan en todos los campos.</small></div>
+    </div>
+
+    <h2 class="sec"><b>3</b>Registro de búsqueda</h2>
+    <p class="sub">Anotá cada búsqueda que hagas: base, fecha, estrategia, filtros y cuántos artículos encontraste y seleccionaste. Es lo que te pide la sección de métodos y el diagrama PRISMA.</p>
+    <div class="tbl"><table class="reg">
+      <thead><tr><th style="width:15%">Base de datos</th><th style="width:13%">Fecha</th><th style="width:32%">Estrategia</th><th style="width:20%">Filtros</th><th style="width:9%">Resultados</th><th style="width:9%">Seleccionados</th><th style="width:2%"></th></tr></thead>
+      <tbody id="reg"></tbody>
+      <tfoot><tr><td colspan="4">Total</td><td id="t-res">0</td><td id="t-sel">0</td><td></td></tr></tfoot>
+    </table></div>
+    <div class="regtools"><button type="button" class="btn btn-light" id="addrow">+ Agregar búsqueda</button></div>
+
+    <div class="summary-actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+      <button type="button" class="btn btn-primary" id="pdf">Descargar PDF</button>
+      <button type="button" class="btn btn-ghost" id="csv">Descargar registro en Excel (CSV)</button>
+    </div>
+
+    <div class="glos">
+      <h2>Guía rápida</h2>
+      <div class="glos-grid">
+        <div><b>DeCS</b>Descriptores en Ciencias de la Salud, en español, portugués e inglés. Se usan en la BVS y LILACS.</div>
+        <div><b>MeSH</b>Medical Subject Headings, en inglés. Es el vocabulario controlado de PubMed y MEDLINE.</div>
+        <div><b>Términos libres</b>Sinónimos, siglas y variantes que el autor puede usar y el descriptor no incluye. Sumalos con OR.</div>
+        <div><b>AND</b>Une conceptos distintos: deben aparecer todos. Reduce resultados.</div>
+        <div><b>OR</b>Une sinónimos de un mismo concepto: alcanza con uno. Amplía resultados.</div>
+        <div><b>NOT</b>Excluye un término. Usalo con cuidado: podés perder artículos útiles.</div>
+        <div><b>Comillas</b><code>"device removal"</code> busca la frase exacta.</div>
+        <div><b>Truncamiento</b><code>decannulat*</code> encuentra decannulation, decannulated y otras variantes.</div>
+        <div><b>Menos es más</b>Empezá con dos conceptos (P e I) y sumá los demás solo si tenés demasiados resultados.</div>
+      </div>
+    </div>
+
+    <div class="cta">
+      <div>
+        <h2>¿Necesitás una búsqueda sistemática?</h2>
+        <p>Te ayudo a armar la estrategia completa para tu tesis o tu revisión, con el diagrama PRISMA.</p>
+      </div>
+      <a class="btn btn-primary" id="wa" href="https://wa.me/5493515288994" target="_blank" rel="noopener">Escribime por WhatsApp</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y"></span> Julián Rosonovich · Epidemiología y Metodología de la Investigación en Salud</span>
+    <a href="https://www.instagram.com/julianrosonovich.epi/" target="_blank" rel="noopener">@julianrosonovich.epi</a>
+  </div>
+</footer>
+
+<div id="sheet" aria-hidden="true" class="sh">
+  <div class="sh-head">
+    <div class="logo"><img src="/plataforma/logo.png" alt=""><span class="logo-text"><strong>Julián Rosonovich</strong><span>EPIDEMIOLOGÍA · METODOLOGÍA DE LA INVESTIGACIÓN</span></span></div>
+    <div class="sh-title"><h1>Búsqueda bibliográfica</h1><div>Conceptos, descriptores DeCS y MeSH, estrategia y registro</div></div>
+  </div>
+  <p class="sh-q" id="sh-q"></p>
+  <h3>Conceptos y descriptores</h3>
+  <table class="sh"><thead><tr><th style="width:6%">PICO</th><th style="width:16%">Concepto</th><th style="width:18%">DeCS</th><th style="width:18%">MeSH</th><th>Sinónimos y términos libres</th><th style="width:7%">Incluido</th></tr></thead><tbody id="sh-cons"></tbody></table>
+  <h3>Estrategia en PubMed</h3><div class="sh-code" id="sh-pubmed"></div>
+  <h3>Estrategia en la BVS</h3><div class="sh-code" id="sh-bvs"></div>
+  <h3>Registro de búsqueda</h3>
+  <table class="sh"><thead><tr><th style="width:13%">Base</th><th style="width:10%">Fecha</th><th>Estrategia</th><th style="width:18%">Filtros</th><th style="width:9%">Resultados</th><th style="width:10%">Seleccionados</th></tr></thead><tbody id="sh-reg"></tbody></table>
+  <div class="sh-foot"><span>julianrosonovich-epi.vercel.app/busqueda</span><span>@julianrosonovich.epi · julianrosonovich.epi@gmail.com</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const PICO = {P:'P · Población', I:'I · Intervención', E:'E · Exposición', C:'C · Comparación', O:'O · Resultado', X:'Otro'};
+  const BASES = ['PubMed','BVS / LILACS','Cochrane Library','SciELO','Google Académico','Otra'];
+  const NEWC = () => ({letra:'', nombre:'', decs:'', mesh:'', sin:'', inc:true});
+  const NEWR = () => ({base:'', fecha:'', estr:'', filt:'', res:'', sel:''});
+  const EXAMPLE = {
+    q:'En adultos traqueostomizados en UTI desvinculados de la ventilación mecánica, ¿un protocolo estructurado de decanulación, comparado con la práctica habitual, reduce los días hasta la decanulación exitosa?',
+    cons:[
+      {letra:'P', nombre:'Traqueostomía', decs:'Traqueostomía', mesh:'Tracheostomy', sin:'tracheostom*, traqueostom*, tracheotomy', inc:true},
+      {letra:'I', nombre:'Decanulación', decs:'Remoción de Dispositivos', mesh:'Device Removal', sin:'decannulat*, decanulación, decanulacion', inc:true},
+      {letra:'I', nombre:'Protocolo', decs:'Protocolos Clínicos', mesh:'Clinical Protocols', sin:'protocol*', inc:false}
+    ],
+    reg:[{base:'PubMed', fecha:'', estr:'', filt:'Últimos 10 años; inglés y español', res:'', sel:''},
+         {base:'BVS / LILACS', fecha:'', estr:'', filt:'Últimos 10 años', res:'', sel:''}]
+  };
+  let data = {q:'', cons:[NEWC(), NEWC()], reg:[NEWR()]};
+  const store = {
+    get(){ try { return JSON.parse(localStorage.getItem('busq-v1')||'null'); } catch(e){ return null; } },
+    set(v){ try { localStorage.setItem('busq-v1', JSON.stringify(v)); } catch(e){} }
+  };
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const terms = s => String(s||'').split(',').map(t => t.trim()).filter(Boolean);
+  const quote = t => /[\s\-]/.test(t) && !/^".*"$/.test(t) ? '"'+t+'"' : t;
+
+  function strategy(kind){
+    const blocks = data.cons.filter(c => c.inc).map(c => {
+      const parts = [];
+      if (kind === 'pubmed'){
+        if (c.mesh.trim()) parts.push('"'+c.mesh.trim().replace(/"/g,'')+'"[Mesh]');
+        terms(c.sin).forEach(t => parts.push(quote(t)+'[tiab]'));
+      } else {
+        if (c.decs.trim()) parts.push('mh:"'+c.decs.trim().replace(/"/g,'')+'"');
+        terms(c.sin).forEach(t => parts.push(quote(t)));
+      }
+      return parts.length ? (parts.length > 1 ? '(' + parts.join(' OR ') + ')' : parts[0]) : '';
+    }).filter(Boolean);
+    return blocks.join(' AND ');
+  }
+
+  function conCard(c, i){
+    const letters = Object.entries(PICO).map(([k,v]) => '<option value="'+k+'"'+(k===c.letra?' selected':'')+'>'+v+'</option>').join('');
+    const term = encodeURIComponent((c.mesh||c.nombre||'').trim());
+    return '<div class="con'+(c.inc?'':' off')+'" data-i="'+i+'">'+
+      '<div class="chead"><select data-k="letra" aria-label="Parte de la pregunta"><option value="">Parte de la pregunta</option>'+letters+'</select>'+
+      '<input type="text" data-k="nombre" value="'+esc(c.nombre)+'" placeholder="Concepto (en tus palabras)" aria-label="Concepto">'+
+      '<label class="inc"><input type="checkbox" data-k="inc"'+(c.inc?' checked':'')+'>Incluir</label>'+
+      '<button type="button" class="cdel" data-del="'+i+'">Quitar</button></div>'+
+      '<div class="cbody">'+
+        '<label class="f"><span>Descriptor DeCS <i>· en español</i></span><input type="text" data-k="decs" value="'+esc(c.decs)+'" placeholder="Ej.: Traqueostomía">'+
+          '<div class="look"><a href="https://decs.bvsalud.org/es/" target="_blank" rel="noopener" data-copyterm="'+i+'">Buscar en DeCS ↗</a></div></label>'+
+        '<label class="f"><span>Descriptor MeSH <i>· en inglés</i></span><input type="text" data-k="mesh" value="'+esc(c.mesh)+'" placeholder="Ej.: Tracheostomy">'+
+          '<div class="look"><a href="https://www.ncbi.nlm.nih.gov/mesh/?term='+term+'" target="_blank" rel="noopener">Buscar en MeSH ↗</a></div></label>'+
+        '<label class="f wide"><span>Sinónimos y términos libres <i>· separados por comas</i></span><input type="text" data-k="sin" value="'+esc(c.sin)+'" placeholder="Ej.: tracheostom*, traqueostom*, tracheotomy"></label>'+
+      '</div></div>';
+  }
+  function regRow(r, i){
+    const bases = BASES.map(b => '<option'+(b===r.base?' selected':'')+'>'+b+'</option>').join('');
+    return '<tr data-i="'+i+'">'+
+      '<td><select data-k="base" aria-label="Base de datos"><option value="">Elegí</option>'+bases+'</select></td>'+
+      '<td><input type="date" data-k="fecha" value="'+esc(r.fecha)+'" aria-label="Fecha"></td>'+
+      '<td><textarea data-k="estr" rows="2" aria-label="Estrategia" placeholder="Pegá la estrategia que usaste">'+esc(r.estr)+'</textarea></td>'+
+      '<td><textarea data-k="filt" rows="2" aria-label="Filtros" placeholder="Años, idioma, tipo de estudio">'+esc(r.filt)+'</textarea></td>'+
+      '<td><input type="number" min="0" data-k="res" value="'+esc(r.res)+'" aria-label="Resultados" placeholder="Ej.: 148"></td>'+
+      '<td><input type="number" min="0" data-k="sel" value="'+esc(r.sel)+'" aria-label="Seleccionados" placeholder="Ej.: 12"></td>'+
+      '<td><button type="button" class="rdel" data-rdel="'+i+'" aria-label="Quitar búsqueda">×</button></td></tr>';
+  }
+  function autosize(){ document.querySelectorAll('textarea').forEach(ta => { ta.style.height='auto'; ta.style.height = ta.scrollHeight + 2 + 'px'; }); }
+  function drawCons(){ $('#cons').innerHTML = data.cons.map(conCard).join(''); }
+  function drawReg(){ $('#reg').innerHTML = data.reg.map(regRow).join(''); }
+  function drawAll(){ $('#q').value = data.q || ''; drawCons(); drawReg(); update(); }
+
+  function update(){
+    const pm = strategy('pubmed'), bv = strategy('bvs');
+    $('#s-pubmed').textContent = pm || 'Completá al menos un concepto con su descriptor o sus sinónimos.';
+    $('#s-bvs').textContent = bv || 'Completá al menos un concepto con su descriptor o sus sinónimos.';
+    $('#go-pubmed').href = pm ? 'https://pubmed.ncbi.nlm.nih.gov/?term=' + encodeURIComponent(pm) : 'https://pubmed.ncbi.nlm.nih.gov/';
+    $('#go-bvs').href = bv ? 'https://pesquisa.bvsalud.org/portal/?q=' + encodeURIComponent(bv) : 'https://pesquisa.bvsalud.org/portal/';
+    const sum = k => data.reg.reduce((a, r) => a + (parseInt(r[k], 10) || 0), 0);
+    $('#t-res').textContent = sum('res'); $('#t-sel').textContent = sum('sel');
+    const msg = 'Hola Julián, estoy armando mi búsqueda bibliográfica y quiero ayuda.' + (pm ? '\n\nMi estrategia en PubMed:\n' + pm : '');
+    $('#wa').href = 'https://wa.me/5493515288994?text=' + encodeURIComponent(msg);
+    autosize(); store.set(data);
+  }
+
+  $('#q').addEventListener('input', e => { data.q = e.target.value; update(); });
+  $('#cons').addEventListener('input', e => {
+    const el = e.target, k = el.dataset.k; if (!k) return;
+    const i = +el.closest('.con').dataset.i;
+    data.cons[i][k] = el.type === 'checkbox' ? el.checked : el.value;
+    if (k === 'inc') el.closest('.con').classList.toggle('off', !el.checked);
+    if (k === 'mesh' || k === 'nombre') { const a = el.closest('.con').querySelector('a[href*="ncbi"]'); a.href = 'https://www.ncbi.nlm.nih.gov/mesh/?term=' + encodeURIComponent((data.cons[i].mesh || data.cons[i].nombre).trim()); }
+    update();
+  });
+  $('#cons').addEventListener('change', e => { if (e.target.tagName === 'SELECT' || e.target.type === 'checkbox') { const i = +e.target.closest('.con').dataset.i; const k = e.target.dataset.k; data.cons[i][k] = e.target.type === 'checkbox' ? e.target.checked : e.target.value; update(); } });
+  $('#cons').addEventListener('click', e => {
+    const d = e.target.dataset.del;
+    if (d !== undefined) { data.cons.splice(+d, 1); if (!data.cons.length) data.cons.push(NEWC()); drawCons(); update(); return; }
+    const ct = e.target.dataset.copyterm;
+    if (ct !== undefined) { const c = data.cons[+ct]; const t = (c.decs || c.nombre || '').trim(); if (t && navigator.clipboard) navigator.clipboard.writeText(t).then(() => toast('Copiamos «'+t+'». Pegalo en el buscador de DeCS.'), () => {}); }
+  });
+  $('#add').addEventListener('click', () => { data.cons.push(NEWC()); drawCons(); update(); const last = document.querySelector('.con:last-child input[data-k=nombre]'); if (last) last.focus(); });
+  $('#reg').addEventListener('input', e => { const el = e.target, k = el.dataset.k; if (!k) return; data.reg[+el.closest('tr').dataset.i][k] = el.value; update(); });
+  $('#reg').addEventListener('change', e => { const el = e.target, k = el.dataset.k; if (!k) return; const i = +el.closest('tr').dataset.i; data.reg[i][k] = el.value;
+    if (k === 'base' && !data.reg[i].estr) { const s = el.value === 'PubMed' ? strategy('pubmed') : el.value === 'BVS / LILACS' ? strategy('bvs') : ''; if (s) { data.reg[i].estr = s; el.closest('tr').querySelector('textarea[data-k=estr]').value = s; } }
+    update(); });
+  $('#reg').addEventListener('click', e => { const d = e.target.dataset.rdel; if (d === undefined) return; data.reg.splice(+d, 1); if (!data.reg.length) data.reg.push(NEWR()); drawReg(); update(); });
+  $('#addrow').addEventListener('click', () => { data.reg.push(NEWR()); drawReg(); update(); });
+
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    const s = strategy(b.dataset.copy); if (!s) { toast('Primero completá un concepto'); return; }
+    try { await navigator.clipboard.writeText(s); toast('Estrategia copiada'); }
+    catch(e){ const ta = document.createElement('textarea'); ta.value = s; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Estrategia copiada'); } catch(_){} ta.remove(); }
+  }));
+  $('#example').addEventListener('click', () => {
+    data = JSON.parse(JSON.stringify(EXAMPLE));
+    data.reg.forEach(r => { r.estr = r.base === 'PubMed' ? strategy('pubmed') : strategy('bvs'); });
+    drawAll(); toast('Cargamos un ejemplo. Verificá los descriptores en DeCS y MeSH.');
+  });
+  $('#clear').addEventListener('click', () => { data = {q:'', cons:[NEWC(), NEWC()], reg:[NEWR()]}; drawAll(); });
+
+  function toast(m){ const el = $('#toast'); el.textContent = m; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('show'), 2600); }
+
+  function fillSheet(){
+    $('#sh-q').innerHTML = '<b>Pregunta:</b> ' + (data.q.trim() ? esc(data.q) : '______________________________________________________________');
+    const cons = data.cons.filter(c => c.nombre.trim() || c.decs.trim() || c.mesh.trim());
+    $('#sh-cons').innerHTML = (cons.length ? cons : [NEWC(), NEWC(), NEWC()]).map(c => '<tr><td>'+esc(c.letra)+'</td><td><b>'+esc(c.nombre)+'</b></td><td>'+esc(c.decs)+'</td><td>'+esc(c.mesh)+'</td><td>'+esc(c.sin)+'</td><td>'+(c.nombre||c.decs||c.mesh ? (c.inc?'Sí':'No') : '')+'</td></tr>').join('');
+    $('#sh-pubmed').textContent = strategy('pubmed') || ' ';
+    $('#sh-bvs').textContent = strategy('bvs') || ' ';
+    const regs = data.reg.filter(r => r.base || r.estr || r.res);
+    $('#sh-reg').innerHTML = (regs.length ? regs : [NEWR(), NEWR(), NEWR()]).map(r => '<tr><td>'+esc(r.base)+'</td><td>'+esc(r.fecha)+'</td><td>'+esc(r.estr)+'</td><td>'+esc(r.filt)+'</td><td>'+esc(r.res)+'</td><td>'+esc(r.sel)+'</td></tr>').join('');
+  }
+  $('#pdf').addEventListener('click', () => { fillSheet(); toast('Elegí "Guardar como PDF" en la ventana de impresión'); setTimeout(() => window.print(), 350); });
+  window.addEventListener('beforeprint', fillSheet);
+  $('#csv').addEventListener('click', () => {
+    const q = v => '"' + String(v==null?'':v).replace(/"/g,'""') + '"';
+    const lines = [['Base de datos','Fecha','Estrategia','Filtros','Resultados','Seleccionados'].map(q).join(';')]
+      .concat(data.reg.filter(r => r.base || r.estr).map(r => [r.base, r.fecha, r.estr, r.filt, r.res, r.sel].map(q).join(';')));
+    const blob = new Blob(['﻿' + lines.join('\r\n')], {type:'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = url; a.download = 'registro_busqueda_bibliografica.csv'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000); toast('Registro descargado. Abrilo con Excel.');
+  });
+  $('#y').textContent = new Date().getFullYear();
+
+  const saved = store.get();
+  if (saved && Array.isArray(saved.cons)) data = {q: saved.q||'', cons: saved.cons.length ? saved.cons.map(c => Object.assign(NEWC(), c)) : [NEWC()], reg: (saved.reg||[]).length ? saved.reg.map(r => Object.assign(NEWR(), r)) : [NEWR()]};
+  drawAll();
+})();
+</script>
+</body>
+</html>
