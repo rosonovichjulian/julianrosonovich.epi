@@ -169,6 +169,15 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
           <a class="open" href="/operacionalizacion/">Abrir planilla →</a>
         </div>
       </article>
+      <article class="res live">
+        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><span class="tag ok">Disponible</span></div>
+        <h3>Búsqueda bibliográfica con DeCS y MeSH</h3>
+        <p>Pasá tu pregunta a descriptores, armá la estrategia para PubMed y la BVS y registrá tus resultados.</p>
+        <div class="go">
+          <a class="lock" href="#desbloquear" data-r="busqueda"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Desbloquear gratis</a>
+          <a class="open" href="/busqueda/">Abrir planilla →</a>
+        </div>
+      </article>
       <article class="res soon">
         <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div><span class="tag soon">Próximamente</span></div>
         <h3>Matriz de consistencia</h3>
@@ -183,11 +192,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg></div><span class="tag soon">Próximamente</span></div>
         <h3>Checklist para el comité de ética</h3>
         <p>Revisá tu protocolo antes de presentarlo, con criterios de un integrante de comité.</p>
-      </article>
-      <article class="res soon">
-        <div class="top"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div><span class="tag soon">Próximamente</span></div>
-        <h3>Registro de búsqueda bibliográfica</h3>
-        <p>Términos DeCS/MeSH, fórmulas de búsqueda y resultados por base de datos.</p>
       </article>
     </div>
   </div>
@@ -268,8 +272,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 (function(){
   const $ = s => document.querySelector(s);
   $('#y').textContent = new Date().getFullYear();
-  const RUTAS = { pico: '/pico/', operacionalizacion: '/operacionalizacion/' };
-  const NOMBRES = { pico: 'Abrir la planilla PICO', operacionalizacion: 'Abrir la planilla de operacionalización' };
+  const RUTAS = { pico: '/pico/', operacionalizacion: '/operacionalizacion/', busqueda: '/busqueda/' };
+  const NOMBRES = { pico: 'Abrir la planilla PICO', operacionalizacion: 'Abrir la planilla de operacionalización', busqueda: 'Abrir la planilla de búsqueda bibliográfica' };
   const params = new URLSearchParams(location.search);
   const recurso = RUTAS[params.get('r')] ? params.get('r') : 'pico';
   $('#go-res').href = RUTAS[recurso]; $('#go-res').textContent = NOMBRES[recurso];
